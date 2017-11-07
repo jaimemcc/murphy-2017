@@ -1,0 +1,385 @@
+medfile	rat	session	sessioncode	date	diet	bottleA	bottleB	licksA	licksB	include	endcol
+!2016-07-19_09h16m.Subject 1	cas9.1	1	training1	160719	np	saccharin	saccharin			0	0
+!2016-07-19_10h27m.Subject 2	cas9.2	1	training1	160719	np	saccharin	saccharin			0	0
+!2016-07-19_11h42m.Subject 3	cas9.3	1	training1	160719	np	saccharin	saccharin			0	0
+!2016-07-19_09h16m.Subject 4	cas9.4	1	training1	160719	np	saccharin	saccharin			0	0
+!2016-07-19_10h27m.Subject 5	cas9.5	1	training1	160719	np	saccharin	saccharin			0	0
+!2016-07-19_11h42m.Subject 6	cas9.6	1	training1	160719	np	saccharin	saccharin			0	0
+!2016-07-19_09h16m.Subject 7	cas9.7	1	training1	160719	np	saccharin	saccharin			0	0
+!2016-07-19_10h28m.Subject 8	cas9.8	1	training1	160719	np	saccharin	saccharin			0	0
+!2016-07-19_11h42m.Subject 9	cas9.9	1	training1	160719	np	saccharin	saccharin			0	0
+!2016-07-19_09h16m.Subject 10	cas9.10	1	training1	160719	np	saccharin	saccharin			0	0
+!2016-07-19_10h28m.Subject 11	cas9.11	1	training1	160719	np	saccharin	saccharin			0	0
+!2016-07-19_11h42m.Subject 12	cas9.12	1	training1	160719	np	saccharin	saccharin			0	0
+!2016-07-19_14h47m.Subject 13	cas9.13	1	training1	160719	lp	saccharin	saccharin			0	0
+!2016-07-19_15h50m.Subject 14	cas9.14	1	training1	160719	lp	saccharin	saccharin			0	0
+!2016-07-19_16h51m.Subject 15	cas9.15	1	training1	160719	lp	saccharin	saccharin			0	0
+!2016-07-19_14h47m.Subject 16	cas9.16	1	training1	160719	lp	saccharin	saccharin			0	0
+!2016-07-19_15h50m.Subject 17	cas9.17	1	training1	160719	lp	saccharin	saccharin			0	0
+!2016-07-19_16h51m.Subject 18	cas9.18	1	training1	160719	lp	saccharin	saccharin			0	0
+!2016-07-19_14h47m.Subject 19	cas9.19	1	training1	160719	lp	saccharin	saccharin			0	0
+!2016-07-19_15h50m.Subject 20	cas9.20	1	training1	160719	lp	saccharin	saccharin			0	0
+!2016-07-19_16h51m.Subject 21	cas9.21	1	training1	160719	lp	saccharin	saccharin			0	0
+!2016-07-19_14h47m.Subject 22	cas9.22	1	training1	160719	lp	saccharin	saccharin			0	0
+!2016-07-19_15h50m.Subject 23	cas9.23	1	training1	160719	lp	saccharin	saccharin			0	0
+!2016-07-19_16h51m.Subject 24	cas9.24	1	training1	160719	lp	saccharin	saccharin			0	0
+!2016-07-20_07h15m.Subject 1	cas9.1	2	training2	160720	np	saccharin	saccharin			0	0
+!2016-07-20_08h16m.Subject 2	cas9.2	2	training2	160720	np	saccharin	saccharin			0	0
+!2016-07-20_12h17m.Subject 3	cas9.3	2	training2	160720	np	saccharin	saccharin			0	0
+!2016-07-20_07h15m.Subject 4	cas9.4	2	training2	160720	np	saccharin	saccharin			0	0
+!2016-07-20_08h16m.Subject 5	cas9.5	2	training2	160720	np	saccharin	saccharin			0	0
+!2016-07-20_12h17m.Subject 6	cas9.6	2	training2	160720	np	saccharin	saccharin			0	0
+!2016-07-20_07h16m.Subject 7	cas9.7	2	training2	160720	np	saccharin	saccharin			0	0
+!2016-07-20_08h16m.Subject 8	cas9.8	2	training2	160720	np	saccharin	saccharin			0	0
+!2016-07-20_12h17m.Subject 9	cas9.9	2	training2	160720	np	saccharin	saccharin			0	0
+!2016-07-20_07h16m.Subject 10	cas9.10	2	training2	160720	np	saccharin	saccharin			0	0
+!2016-07-20_08h16m.Subject 11	cas9.11	2	training2	160720	np	saccharin	saccharin			0	0
+!2016-07-20_12h17m.Subject 12	cas9.12	2	training2	160720	np	saccharin	saccharin			0	0
+!2016-07-20_13h28m.Subject 13	cas9.13	2	training2	160720	lp	saccharin	saccharin			0	0
+!2016-07-20_14h35m.Subject 14	cas9.14	2	training2	160720	lp	saccharin	saccharin			0	0
+!2016-07-20_15h38m.Subject 15	cas9.15	2	training2	160720	lp	saccharin	saccharin			0	0
+!2016-07-20_13h28m.Subject 16	cas9.16	2	training2	160720	lp	saccharin	saccharin			0	0
+!2016-07-20_14h35m.Subject 17	cas9.17	2	training2	160720	lp	saccharin	saccharin			0	0
+!2016-07-20_15h38m.Subject 18	cas9.18	2	training2	160720	lp	saccharin	saccharin			0	0
+!2016-07-20_13h28m.Subject 19	cas9.19	2	training2	160720	lp	saccharin	saccharin			0	0
+!2016-07-20_14h35m.Subject 20	cas9.20	2	training2	160720	lp	saccharin	saccharin			0	0
+!2016-07-20_15h38m.Subject 21	cas9.21	2	training2	160720	lp	saccharin	saccharin			0	0
+!2016-07-20_13h28m.Subject 22	cas9.22	2	training2	160720	lp	saccharin	saccharin			0	0
+!2016-07-20_14h35m.Subject 23	cas9.23	2	training2	160720	lp	saccharin	saccharin			0	0
+!2016-07-20_15h38m.Subject 24	cas9.24	2	training2	160720	lp	saccharin	saccharin			0	0
+!2016-07-21_10h03m.Subject 1	cas9.1	3	training3	160721	np	saccharin	saccharin			0	0
+!2016-07-21_11h11m.Subject 2	cas9.2	3	training3	160721	np	saccharin	saccharin			0	0
+!2016-07-21_13h24m.Subject 3	cas9.3	3	training3	160721	np	saccharin	saccharin			0	0
+!2016-07-21_10h03m.Subject 4	cas9.4	3	training3	160721	np	saccharin	saccharin			0	0
+!2016-07-21_11h11m.Subject 5	cas9.5	3	training3	160721	np	saccharin	saccharin			0	0
+!2016-07-21_13h24m.Subject 6	cas9.6	3	training3	160721	np	saccharin	saccharin			0	0
+!2016-07-21_10h03m.Subject 7	cas9.7	3	training3	160721	np	saccharin	saccharin			0	0
+!2016-07-21_11h11m.Subject 8	cas9.8	3	training3	160721	np	saccharin	saccharin			0	0
+!2016-07-21_13h24m.Subject 9	cas9.9	3	training3	160721	np	saccharin	saccharin			0	0
+!2016-07-21_10h03m.Subject 10	cas9.10	3	training3	160721	np	saccharin	saccharin			0	0
+!2016-07-21_11h11m.Subject 11	cas9.11	3	training3	160721	np	saccharin	saccharin			0	0
+!2016-07-21_13h24m.Subject 12	cas9.12	3	training3	160721	np	saccharin	saccharin			0	0
+!2016-07-21_14h30m.Subject 13	cas9.13	3	training3	160721	lp	saccharin	saccharin			0	0
+!2016-07-21_15h30m.Subject 14	cas9.14	3	training3	160721	lp	saccharin	saccharin			0	0
+!2016-07-21_16h31m.Subject 15	cas9.15	3	training3	160721	lp	saccharin	saccharin			0	0
+!2016-07-21_14h30m.Subject 16	cas9.16	3	training3	160721	lp	saccharin	saccharin			0	0
+!2016-07-21_15h30m.Subject 17	cas9.17	3	training3	160721	lp	saccharin	saccharin			0	0
+!2016-07-21_16h31m.Subject 18	cas9.18	3	training3	160721	lp	saccharin	saccharin			0	0
+!2016-07-21_14h30m.Subject 19	cas9.19	3	training3	160721	lp	saccharin	saccharin			0	0
+!2016-07-21_15h31m.Subject 20	cas9.20	3	training3	160721	lp	saccharin	saccharin			0	0
+!2016-07-21_16h31m.Subject 21	cas9.21	3	training3	160721	lp	saccharin	saccharin			0	0
+!2016-07-21_14h30m.Subject 22	cas9.22	3	training3	160721	lp	saccharin	saccharin			0	0
+!2016-07-21_15h31m.Subject 23	cas9.23	3	training3	160721	lp	saccharin	saccharin			0	0
+!2016-07-21_16h32m.Subject 24	cas9.24	3	training3	160721	lp	saccharin	saccharin			0	0
+!2016-07-22_07h56m.Subject 1	cas9.1	4	training4	160722	np	saccharin	saccharin			0	0
+!2016-07-22_10h17m.Subject 2	cas9.2	4	training4	160722	np	saccharin	saccharin			0	0
+!2016-07-22_11h26m.Subject 3	cas9.3	4	training4	160722	np	saccharin	saccharin			0	0
+!2016-07-22_07h56m.Subject 4	cas9.4	4	training4	160722	np	saccharin	saccharin			0	0
+!2016-07-22_10h17m.Subject 5	cas9.5	4	training4	160722	np	saccharin	saccharin			0	0
+!2016-07-22_11h26m.Subject 6	cas9.6	4	training4	160722	np	saccharin	saccharin			0	0
+!2016-07-22_07h56m.Subject 7	cas9.7	4	training4	160722	np	saccharin	saccharin			0	0
+!2016-07-22_10h17m.Subject 8	cas9.8	4	training4	160722	np	saccharin	saccharin			0	0
+!2016-07-22_11h26m.Subject 9	cas9.9	4	training4	160722	np	saccharin	saccharin			0	0
+!2016-07-22_07h56m.Subject 10	cas9.10	4	training4	160722	np	saccharin	saccharin			0	0
+!2016-07-22_10h17m.Subject 11	cas9.11	4	training4	160722	np	saccharin	saccharin			0	0
+!2016-07-22_11h26m.Subject 12	cas9.12	4	training4	160722	np	saccharin	saccharin			0	0
+!2016-07-22_13h21m.Subject 13	cas9.13	4	training4	160722	lp	saccharin	saccharin			0	0
+!2016-07-22_14h22m.Subject 14	cas9.14	4	training4	160722	lp	saccharin	saccharin			0	0
+!2016-07-22_15h29m.Subject 15	cas9.15	4	training4	160722	lp	saccharin	saccharin			0	0
+!2016-07-22_13h21m.Subject 16	cas9.16	4	training4	160722	lp	saccharin	saccharin			0	0
+!2016-07-22_14h22m.Subject 17	cas9.17	4	training4	160722	lp	saccharin	saccharin			0	0
+!2016-07-22_15h29m.Subject 18	cas9.18	4	training4	160722	lp	saccharin	saccharin			0	0
+!2016-07-22_13h21m.Subject 19	cas9.19	4	training4	160722	lp	saccharin	saccharin			0	0
+!2016-07-22_14h22m.Subject 20	cas9.20	4	training4	160722	lp	saccharin	saccharin			0	0
+!2016-07-22_15h29m.Subject 21	cas9.21	4	training4	160722	lp	saccharin	saccharin			0	0
+!2016-07-22_13h21m.Subject 22	cas9.22	4	training4	160722	lp	saccharin	saccharin			0	0
+!2016-07-22_14h22m.Subject 23	cas9.23	4	training4	160722	lp	saccharin	saccharin			0	0
+!2016-07-22_15h29m.Subject 24	cas9.24	4	training4	160722	lp	saccharin	saccharin			0	0
+!2016-07-23_08h06m.Subject 1	cas9.1	5	training5	160723	np	saccharin	saccharin			0	0
+!2016-07-23_09h12m.Subject 2	cas9.2	5	training5	160723	np	saccharin	saccharin			0	0
+!2016-07-23_10h18m.Subject 3	cas9.3	5	training5	160723	np	saccharin	saccharin			0	0
+!2016-07-23_08h06m.Subject 4	cas9.4	5	training5	160723	np	saccharin	saccharin			0	0
+!2016-07-23_09h12m.Subject 5	cas9.5	5	training5	160723	np	saccharin	saccharin			0	0
+!2016-07-23_10h18m.Subject 6	cas9.6	5	training5	160723	np	saccharin	saccharin			0	0
+!2016-07-23_08h06m.Subject 7	cas9.7	5	training5	160723	np	saccharin	saccharin			0	0
+!2016-07-23_09h13m.Subject 8	cas9.8	5	training5	160723	np	saccharin	saccharin			0	0
+!2016-07-23_10h18m.Subject 9	cas9.9	5	training5	160723	np	saccharin	saccharin			0	0
+!2016-07-23_08h06m.Subject 10	cas9.10	5	training5	160723	np	saccharin	saccharin			0	0
+!2016-07-23_09h13m.Subject 11	cas9.11	5	training5	160723	np	saccharin	saccharin			0	0
+!2016-07-23_10h18m.Subject 12	cas9.12	5	training5	160723	np	saccharin	saccharin			0	0
+!2016-07-23_11h41m.Subject 13	cas9.13	5	training5	160723	lp	saccharin	saccharin			0	0
+!2016-07-23_12h48m.Subject 14	cas9.14	5	training5	160723	lp	saccharin	saccharin			0	0
+!2016-07-23_13h53m.Subject 15	cas9.15	5	training5	160723	lp	saccharin	saccharin			0	0
+!2016-07-23_11h41m.Subject 16	cas9.16	5	training5	160723	lp	saccharin	saccharin			0	0
+!2016-07-23_12h48m.Subject 17	cas9.17	5	training5	160723	lp	saccharin	saccharin			0	0
+!2016-07-23_13h53m.Subject 18	cas9.18	5	training5	160723	lp	saccharin	saccharin			0	0
+!2016-07-23_11h41m.Subject 19	cas9.19	5	training5	160723	lp	saccharin	saccharin			0	0
+!2016-07-23_12h48m.Subject 20	cas9.20	5	training5	160723	lp	saccharin	saccharin			0	0
+!2016-07-23_13h53m.Subject 21	cas9.21	5	training5	160723	lp	saccharin	saccharin			0	0
+!2016-07-23_11h41m.Subject 22	cas9.22	5	training5	160723	lp	saccharin	saccharin			0	0
+!2016-07-23_12h48m.Subject 23	cas9.23	5	training5	160723	lp	saccharin	saccharin			0	0
+!2016-07-23_13h53m.Subject 24	cas9.24	5	training5	160723	lp	saccharin	saccharin			0	0
+!2016-07-24_10h38m.Subject 1	cas9.1	6	training6	160724	np	saccharin	saccharin			0	0
+!2016-07-24_11h45m.Subject 2	cas9.2	6	training6	160724	np	saccharin	saccharin			0	0
+!2016-07-24_12h56m.Subject 3	cas9.3	6	training6	160724	np	saccharin	saccharin			0	0
+!2016-07-24_10h38m.Subject 4	cas9.4	6	training6	160724	np	saccharin	saccharin			0	0
+!2016-07-24_11h46m.Subject 5	cas9.5	6	training6	160724	np	saccharin	saccharin			0	0
+!2016-07-24_12h56m.Subject 6	cas9.6	6	training6	160724	np	saccharin	saccharin			0	0
+!2016-07-24_10h38m.Subject 7	cas9.7	6	training6	160724	np	saccharin	saccharin			0	0
+!2016-07-24_11h46m.Subject 8	cas9.8	6	training6	160724	np	saccharin	saccharin			0	0
+!2016-07-24_12h56m.Subject 9	cas9.9	6	training6	160724	np	saccharin	saccharin			0	0
+!2016-07-24_10h38m.Subject 10	cas9.10	6	training6	160724	np	saccharin	saccharin			0	0
+!2016-07-24_11h46m.Subject 11	cas9.11	6	training6	160724	np	saccharin	saccharin			0	0
+!2016-07-24_12h56m.Subject 12	cas9.12	6	training6	160724	np	saccharin	saccharin			0	0
+!2016-07-24_14h14m.Subject 13	cas9.13	6	training6	160724	lp	saccharin	saccharin			0	0
+!2016-07-24_15h22m.Subject 14	cas9.14	6	training6	160724	lp	saccharin	saccharin			0	0
+!2016-07-24_16h32m.Subject 15	cas9.15	6	training6	160724	lp	saccharin	saccharin			0	0
+!2016-07-24_14h14m.Subject 16	cas9.16	6	training6	160724	lp	saccharin	saccharin			0	0
+!2016-07-24_15h22m.Subject 17	cas9.17	6	training6	160724	lp	saccharin	saccharin			0	0
+!2016-07-24_16h32m.Subject 18	cas9.18	6	training6	160724	lp	saccharin	saccharin			0	0
+!2016-07-24_14h14m.Subject 19	cas9.19	6	training6	160724	lp	saccharin	saccharin			0	0
+!2016-07-24_15h22m.Subject 20	cas9.20	6	training6	160724	lp	saccharin	saccharin			0	0
+!2016-07-24_16h32m.Subject 21	cas9.21	6	training6	160724	lp	saccharin	saccharin			0	0
+!2016-07-24_14h14m.Subject 22	cas9.22	6	training6	160724	lp	saccharin	saccharin			0	0
+!2016-07-24_15h22m.Subject 23	cas9.23	6	training6	160724	lp	saccharin	saccharin			0	0
+!2016-07-24_16h32m.Subject 24	cas9.24	6	training6	160724	lp	saccharin	saccharin			0	0
+!2016-07-28_09h30m.Subject 1	cas9.1	7	casein1	160728	np	casein	empty			1	0
+!2016-07-28_10h40m.Subject 2	cas9.2	7	casein1	160728	np	casein	empty			1	0
+!2016-07-28_11h53m.Subject 3	cas9.3	7	casein1	160728	np	casein	empty			1	0
+!2016-07-28_09h30m.Subject 4	cas9.4	7	maltodextrin1	160728	np	maltodextrin	empty			1	0
+!2016-07-28_10h40m.Subject 5	cas9.5	7	maltodextrin1	160728	np	maltodextrin	empty			1	0
+!2016-07-28_11h53m.Subject 6	cas9.6	7	maltodextrin1	160728	np	maltodextrin	empty			1	0
+!2016-07-28_14h51m.Subject 7	cas9.7	7	casein1	160728	np	empty	casein			1	0
+!2016-07-28_16h00m.Subject 8	cas9.8	7	casein1	160728	np	empty	casein			1	0
+!2016-07-28_17h04m.Subject 9	cas9.9	7	casein1	160728	np	empty	casein			1	0
+!2016-07-28_14h51m.Subject 10	cas9.10	7	maltodextrin1	160728	np	empty	maltodextrin			1	0
+!2016-07-28_16h00m.Subject 11	cas9.11	7	maltodextrin1	160728	np	empty	maltodextrin			1	0
+!2016-07-28_17h04m.Subject 12	cas9.12	7	maltodextrin1	160728	np	empty	maltodextrin			1	0
+!2016-07-28_09h30m.Subject 13	cas9.13	7	casein1	160728	lp	casein	empty			1	0
+!2016-07-28_10h41m.Subject 14	cas9.14	7	casein1	160728	lp	casein	empty			1	0
+!2016-07-28_11h53m.Subject 15	cas9.15	7	casein1	160728	lp	casein	empty			1	0
+!2016-07-28_09h30m.Subject 16	cas9.16	7	maltodextrin1	160728	lp	maltodextrin	empty			1	0
+!2016-07-28_10h41m.Subject 17	cas9.17	7	maltodextrin1	160728	lp	maltodextrin	empty			1	0
+!2016-07-28_11h53m.Subject 18	cas9.18	7	maltodextrin1	160728	lp	maltodextrin	empty			1	0
+!2016-07-28_14h51m.Subject 19	cas9.19	7	casein1	160728	lp	empty	casein			1	0
+!2016-07-28_16h00m.Subject 20	cas9.20	7	casein1	160728	lp	empty	casein			1	0
+!2016-07-28_17h04m.Subject 21	cas9.21	7	casein1	160728	lp	empty	casein			1	0
+!2016-07-28_14h51m.Subject 22	cas9.22	7	maltodextrin1	160728	lp	empty	maltodextrin			1	0
+!2016-07-28_16h00m.Subject 23	cas9.23	7	maltodextrin1	160728	lp	empty	maltodextrin			1	0
+!2016-07-28_17h04m.Subject 24	cas9.24	7	maltodextrin1	160728	lp	empty	maltodextrin			1	0
+!2016-07-29_08h56m.Subject 1	cas9.1	8	maltodextrin1	160729	np	empty	maltodextrin			1	0
+!2016-07-29_10h10m.Subject 2	cas9.2	8	maltodextrin1	160729	np	empty	maltodextrin			1	0
+!2016-07-29_11h18m.Subject 3	cas9.3	8	maltodextrin1	160729	np	empty	maltodextrin			1	0
+!2016-07-29_08h56m.Subject 4	cas9.4	8	casein1	160729	np	empty	casein			1	0
+!2016-07-29_10h10m.Subject 5	cas9.5	8	casein1	160729	np	empty	casein			1	0
+!2016-07-29_11h18m.Subject 6	cas9.6	8	casein1	160729	np	empty	casein			1	0
+!2016-07-29_12h41m.Subject 7	cas9.7	8	maltodextrin1	160729	np	maltodextrin	empty			1	0
+!2016-07-29_13h49m.Subject 8	cas9.8	8	maltodextrin1	160729	np	maltodextrin	empty			1	0
+!2016-07-29_14h59m.Subject 9	cas9.9	8	maltodextrin1	160729	np	maltodextrin	empty			1	0
+!2016-07-29_12h41m.Subject 10	cas9.10	8	casein1	160729	np	casein	empty			1	0
+!2016-07-29_13h49m.Subject 11	cas9.11	8	casein1	160729	np	casein	empty			1	0
+!2016-07-29_14h59m.Subject 12	cas9.12	8	casein1	160729	np	casein	empty			1	0
+!2016-07-29_08h56m.Subject 13	cas9.13	8	maltodextrin1	160729	lp	empty	maltodextrin			1	0
+!2016-07-29_10h10m.Subject 14	cas9.14	8	maltodextrin1	160729	lp	empty	maltodextrin			1	0
+!2016-07-29_11h18m.Subject 15	cas9.15	8	maltodextrin1	160729	lp	empty	maltodextrin			1	0
+!2016-07-29_08h56m.Subject 16	cas9.16	8	casein1	160729	lp	empty	casein			1	0
+!2016-07-29_10h10m.Subject 17	cas9.17	8	casein1	160729	lp	empty	casein			1	0
+!2016-07-29_11h18m.Subject 18	cas9.18	8	casein1	160729	lp	empty	casein			1	0
+!2016-07-29_12h41m.Subject 19	cas9.19	8	maltodextrin1	160729	lp	maltodextrin	empty			1	0
+!2016-07-29_13h49m.Subject 20	cas9.20	8	maltodextrin1	160729	lp	maltodextrin	empty			1	0
+!2016-07-29_14h59m.Subject 21	cas9.21	8	maltodextrin1	160729	lp	maltodextrin	empty			1	0
+!2016-07-29_12h41m.Subject 22	cas9.22	8	casein1	160729	lp	casein	empty			1	0
+!2016-07-29_13h49m.Subject 23	cas9.23	8	casein1	160729	lp	casein	empty			1	0
+!2016-07-29_14h59m.Subject 24	cas9.24	8	casein1	160729	lp	casein	empty			1	0
+!2016-07-30_09h54m.Subject 1	cas9.1	9	casein2	160730	np	casein	empty			1	0
+!2016-07-30_10h59m.Subject 2	cas9.2	9	casein2	160730	np	casein	empty			1	0
+!2016-07-30_12h04m.Subject 3	cas9.3	9	casein2	160730	np	casein	empty			1	0
+!2016-07-30_09h54m.Subject 4	cas9.4	9	maltodextrin2	160730	np	maltodextrin	empty			1	0
+!2016-07-30_10h59m.Subject 5	cas9.5	9	maltodextrin2	160730	np	maltodextrin	empty			1	0
+!2016-07-30_12h04m.Subject 6	cas9.6	9	maltodextrin2	160730	np	maltodextrin	empty			1	0
+!2016-07-30_13h27m.Subject 7	cas9.7	9	casein2	160730	np	empty	casein			1	0
+!2016-07-30_14h34m.Subject 8	cas9.8	9	casein2	160730	np	empty	casein			1	0
+!2016-07-30_15h38m.Subject 9	cas9.9	9	casein2	160730	np	empty	casein			1	0
+!2016-07-30_13h27m.Subject 10	cas9.10	9	maltodextrin2	160730	np	empty	maltodextrin			1	0
+!2016-07-30_14h35m.Subject 11	cas9.11	9	maltodextrin2	160730	np	empty	maltodextrin			1	0
+!2016-07-30_15h38m.Subject 12	cas9.12	9	maltodextrin2	160730	np	empty	maltodextrin			1	0
+!2016-07-30_09h54m.Subject 13	cas9.13	9	casein2	160730	lp	casein	empty			1	0
+!2016-07-30_10h59m.Subject 14	cas9.14	9	casein2	160730	lp	casein	empty			1	0
+!2016-07-30_12h04m.Subject 15	cas9.15	9	casein2	160730	lp	casein	empty			1	0
+!2016-07-30_09h54m.Subject 16	cas9.16	9	maltodextrin2	160730	lp	maltodextrin	empty			1	0
+!2016-07-30_10h59m.Subject 17	cas9.17	9	maltodextrin2	160730	lp	maltodextrin	empty			1	0
+!2016-07-30_12h04m.Subject 18	cas9.18	9	maltodextrin2	160730	lp	maltodextrin	empty			1	0
+!2016-07-30_13h27m.Subject 19	cas9.19	9	casein2	160730	lp	empty	casein			1	0
+!2016-07-30_14h35m.Subject 20	cas9.20	9	casein2	160730	lp	empty	casein			1	0
+!2016-07-30_15h39m.Subject 21	cas9.21	9	casein2	160730	lp	empty	casein			1	0
+!2016-07-30_13h27m.Subject 22	cas9.22	9	maltodextrin2	160730	lp	empty	maltodextrin			1	0
+!2016-07-30_14h35m.Subject 23	cas9.23	9	maltodextrin2	160730	lp	empty	maltodextrin			1	0
+!2016-07-30_15h39m.Subject 24	cas9.24	9	maltodextrin2	160730	lp	empty	maltodextrin			1	0
+!2016-07-31_10h41m.Subject 1	cas9.1	10	maltodextrin2	160731	np	empty	maltodextrin			1	0
+!2016-07-31_11h43m.Subject 2	cas9.2	10	maltodextrin2	160731	np	empty	maltodextrin			1	0
+!2016-07-31_12h50m.Subject 3	cas9.3	10	maltodextrin2	160731	np	empty	maltodextrin			1	0
+!2016-07-31_10h41m.Subject 4	cas9.4	10	casein2	160731	np	empty	casein			1	0
+!2016-07-31_11h44m.Subject 5	cas9.5	10	casein2	160731	np	empty	casein			1	0
+!2016-07-31_12h50m.Subject 6	cas9.6	10	casein2	160731	np	empty	casein			1	0
+!2016-07-31_13h58m.Subject 7	cas9.7	10	maltodextrin2	160731	np	maltodextrin	empty			1	0
+!2016-07-31_15h01m.Subject 8	cas9.8	10	maltodextrin2	160731	np	maltodextrin	empty			1	0
+!2016-07-31_16h05m.Subject 9	cas9.9	10	maltodextrin2	160731	np	maltodextrin	empty			1	0
+!2016-07-31_13h58m.Subject 10	cas9.10	10	casein2	160731	np	casein	empty			1	0
+!2016-07-31_15h01m.Subject 11	cas9.11	10	casein2	160731	np	casein	empty			1	0
+!2016-07-31_16h05m.Subject 12	cas9.12	10	casein2	160731	np	casein	empty			1	0
+!2016-07-31_10h41m.Subject 13	cas9.13	10	maltodextrin2	160731	lp	empty	maltodextrin			1	0
+!2016-07-31_11h44m.Subject 14	cas9.14	10	maltodextrin2	160731	lp	empty	maltodextrin			1	0
+!2016-07-31_12h50m.Subject 15	cas9.15	10	maltodextrin2	160731	lp	empty	maltodextrin			1	0
+!2016-07-31_10h41m.Subject 16	cas9.16	10	casein2	160731	lp	empty	casein			1	0
+!2016-07-31_11h44m.Subject 17	cas9.17	10	casein2	160731	lp	empty	casein			1	0
+!2016-07-31_12h50m.Subject 18	cas9.18	10	casein2	160731	lp	empty	casein			1	0
+!2016-07-31_13h58m.Subject 19	cas9.19	10	maltodextrin2	160731	lp	maltodextrin	empty			1	0
+!2016-07-31_15h02m.Subject 20	cas9.20	10	maltodextrin2	160731	lp	maltodextrin	empty			1	0
+!2016-07-31_16h05m.Subject 21	cas9.21	10	maltodextrin2	160731	lp	maltodextrin	empty			1	0
+!2016-07-31_13h58m.Subject 22	cas9.22	10	casein2	160731	lp	casein	empty			1	0
+!2016-07-31_15h02m.Subject 23	cas9.23	10	casein2	160731	lp	casein	empty			1	0
+!2016-07-31_16h05m.Subject 24	cas9.24	10	casein2	160731	lp	casein	empty			1	0
+!2016-08-01_12h59m.Subject 1	cas9.1	11	preference1	160801	np	casein	maltodextrin			1	0
+!2016-08-01_14h30m.Subject 2	cas9.2	11	preference1	160801	np	casein	maltodextrin			1	0
+!2016-08-01_15h40m.Subject 3	cas9.3	11	preference1	160801	np	casein	maltodextrin			1	0
+!2016-08-01_12h59m.Subject 4	cas9.4	11	preference1	160801	np	maltodextrin	casein			1	0
+!2016-08-01_14h30m.Subject 5	cas9.5	11	preference1	160801	np	maltodextrin	casein			1	0
+!2016-08-01_15h40m.Subject 6	cas9.6	11	preference1	160801	np	maltodextrin	casein			1	0
+!2016-08-01_09h15m.Subject 7	cas9.7	11	preference1	160801	np	maltodextrin	casein			1	0
+!2016-08-01_10h37m.Subject 8	cas9.8	11	preference1	160801	np	maltodextrin	casein			1	0
+!2016-08-01_11h47m.Subject 9	cas9.9	11	preference1	160801	np	maltodextrin	casein			1	0
+!2016-08-01_09h15m.Subject 10	cas9.10	11	preference1	160801	np	casein	maltodextrin			1	0
+!2016-08-01_10h37m.Subject 11	cas9.11	11	preference1	160801	np	casein	maltodextrin			1	0
+!2016-08-01_11h47m.Subject 12	cas9.12	11	preference1	160801	np	casein	maltodextrin			1	0
+!2016-08-01_12h59m.Subject 13	cas9.13	11	preference1	160801	lp	casein	maltodextrin			1	0
+!2016-08-01_14h30m.Subject 14	cas9.14	11	preference1	160801	lp	casein	maltodextrin			1	0
+!2016-08-01_15h40m.Subject 15	cas9.15	11	preference1	160801	lp	casein	maltodextrin			1	0
+!2016-08-01_13h00m.Subject 16	cas9.16	11	preference1	160801	lp	maltodextrin	casein			1	0
+!2016-08-01_14h30m.Subject 17	cas9.17	11	preference1	160801	lp	maltodextrin	casein			1	0
+!2016-08-01_15h40m.Subject 18	cas9.18	11	preference1	160801	lp	maltodextrin	casein			1	0
+!2016-08-01_09h16m.Subject 19	cas9.19	11	preference1	160801	lp	maltodextrin	casein			1	0
+!2016-08-01_10h37m.Subject 20	cas9.20	11	preference1	160801	lp	maltodextrin	casein			1	0
+!2016-08-01_11h48m.Subject 21	cas9.21	11	preference1	160801	lp	maltodextrin	casein			1	0
+!2016-08-01_09h16m.Subject 22	cas9.22	11	preference1	160801	lp	casein	maltodextrin			1	0
+!2016-08-01_10h37m.Subject 23	cas9.23	11	preference1	160801	lp	casein	maltodextrin			1	0
+!2016-08-01_11h48m.Subject 24	cas9.24	11	preference1	160801	lp	casein	maltodextrin			1	0
+!2016-08-08_10h47m.Subject 1	cas9.1	12		160808	np					0	0
+!2016-08-08_11h56m.Subject 2	cas9.2	12		160808	np					0	0
+!2016-08-08_13h02m.Subject 3	cas9.3	12		160808	np					0	0
+!2016-08-08_10h47m.Subject 4	cas9.4	12		160808	np					0	0
+!2016-08-08_11h56m.Subject 5	cas9.5	12		160808	np					0	0
+!2016-08-08_13h02m.Subject 6	cas9.6	12		160808	np					0	0
+!2016-08-08_10h47m.Subject 7	cas9.7	12		160808	np					0	0
+!2016-08-08_11h56m.Subject 8	cas9.8	12		160808	np					0	0
+!2016-08-08_13h02m.Subject 9	cas9.9	12		160808	np					0	0
+!2016-08-08_10h47m.Subject 10	cas9.10	12		160808	np					0	0
+!2016-08-08_11h56m.Subject 11	cas9.11	12		160808	np					0	0
+!2016-08-08_13h02m.Subject 12	cas9.12	12		160808	np					0	0
+!2016-08-08_14h11m.Subject 13	cas9.13	12		160808	lp					0	0
+!2016-08-08_15h19m.Subject 14	cas9.14	12		160808	lp					0	0
+!2016-08-08_16h56m.Subject 15	cas9.15	12		160808	lp					0	0
+!2016-08-08_14h11m.Subject 16	cas9.16	12		160808	lp					0	0
+!2016-08-08_15h20m.Subject 17	cas9.17	12		160808	lp					0	0
+!2016-08-08_16h56m.Subject 18	cas9.18	12		160808	lp					0	0
+!2016-08-08_14h12m.Subject 19	cas9.19	12		160808	lp					0	0
+!2016-08-08_15h21m.Subject 20	cas9.20	12		160808	lp					0	0
+!2016-08-08_16h56m.Subject 21	cas9.21	12		160808	lp					0	0
+!2016-08-08_14h12m.Subject 21	cas9.22	12		160808	lp					0	0
+!2016-08-08_15h21m.Subject 23	cas9.23	12		160808	lp					0	0
+!2016-08-08_16h56m.Subject 24	cas9.24	12		160808	lp					0	0
+!2016-08-09_07h46m.Subject 1	cas9.1	13		160809	np					0	0
+!2016-08-09_08h52m.Subject 2	cas9.2	13		160809	np					0	0
+!2016-08-09_09h57m.Subject 3	cas9.3	13		160809	np					0	0
+!2016-08-09_07h46m.Subject 4	cas9.4	13		160809	np					0	0
+!2016-08-09_08h52m.Subject 5	cas9.5	13		160809	np					0	0
+!2016-08-09_09h57m.Subject 6	cas9.6	13		160809	np					0	0
+!2016-08-09_11h01m.Subject 7	cas9.7	13		160809	np					0	0
+!2016-08-09_12h12m.Subject 8	cas9.8	13		160809	np					0	0
+!2016-08-09_13h18m.Subject 9	cas9.9	13		160809	np					0	0
+!2016-08-09_11h01m.Subject 10	cas9.10	13		160809	np					0	0
+!2016-08-09_12h12m.Subject 11	cas9.11	13		160809	np					0	0
+!2016-08-09_13h18m.Subject 12	cas9.12	13		160809	np					0	0
+!2016-08-09_07h46m.Subject 13	cas9.13	13		160809	lp					0	0
+!2016-08-09_08h52m.Subject 14	cas9.14	13		160809	lp					0	0
+!2016-08-09_09h57m.Subject 15	cas9.15	13		160809	lp					0	0
+!2016-08-09_07h46m.Subject 16	cas9.16	13		160809	lp					0	0
+!2016-08-09_08h52m.Subject 17	cas9.17	13		160809	lp					0	0
+!2016-08-09_09h57m.Subject 18	cas9.18	13		160809	lp					0	0
+!2016-08-09_11h01m.Subject 19	cas9.19	13		160809	lp					0	0
+!2016-08-09_12h12m.Subject 20	cas9.20	13		160809	lp					0	0
+!2016-08-09_13h18m.Subject 21	cas9.21	13		160809	lp					0	0
+!2016-08-09_11h01m.Subject 22	cas9.22	13		160809	lp					0	0
+!2016-08-09_12h12m.Subject 23	cas9.23	13		160809	lp					0	0
+!2016-08-09_13h18m.Subject 24	cas9.24	13		160809	lp					0	0
+!2016-08-10_07h47m.Subject 1	cas9.1	14		160810	np					0	0
+!2016-08-10_08h59m.Subject 2	cas9.2	14		160810	np					0	0
+!2016-08-10_10h05m.Subject 3	cas9.3	14		160810	np					0	0
+!2016-08-10_07h47m.Subject 4	cas9.4	14		160810	np					0	0
+!2016-08-10_08h59m.Subject 5	cas9.5	14		160810	np					0	0
+!2016-08-10_10h06m.Subject 6	cas9.6	14		160810	np					0	0
+!2016-08-10_11h16m.Subject 7	cas9.7	14		160810	np					0	0
+!2016-08-10_13h57m.Subject 8	cas9.8	14		160810	np					0	0
+!2016-08-10_15h08m.Subject 9	cas9.9	14		160810	np					0	0
+!2016-08-10_11h16m.Subject 10	cas9.10	14		160810	np					0	0
+!2016-08-10_13h57m.Subject 11	cas9.11	14		160810	np					0	0
+!2016-08-10_15h08m.Subject 12	cas9.12	14		160810	np					0	0
+!2016-08-10_07h47m.Subject 13	cas9.13	14		160810	lp					0	0
+!2016-08-10_08h59m.Subject 14	cas9.14	14		160810	lp					0	0
+!2016-08-10_10h06m.Subject 15	cas9.15	14		160810	lp					0	0
+!2016-08-10_07h47m.Subject 16	cas9.16	14		160810	lp					0	0
+!2016-08-10_08h59m.Subject 17	cas9.17	14		160810	lp					0	0
+!2016-08-10_10h06m.Subject 18	cas9.18	14		160810	lp					0	0
+!2016-08-10_11h16m.Subject 19	cas9.19	14		160810	lp					0	0
+!2016-08-10_13h57m.Subject 20	cas9.20	14		160810	lp					0	0
+!2016-08-10_15h08m.Subject 21	cas9.21	14		160810	lp					0	0
+!2016-08-10_11h16m.Subject 22	cas9.22	14		160810	lp					0	0
+!2016-08-10_13h59m.Subject 23	cas9.23	14		160810	lp					0	0
+!2016-08-10_15h08m.Subject 24	cas9.24	14		160810	lp					0	0
+!2016-08-11_07h51m.Subject 1	cas9.1	15		160811	np					0	0
+!2016-08-11_09h01m.Subject 2	cas9.2	15		160811	np					0	0
+!2016-08-11_10h06m.Subject 3	cas9.3	15		160811	np					0	0
+!2016-08-11_07h51m.Subject 4	cas9.4	15		160811	np					0	0
+!2016-08-11_09h01m.Subject 5	cas9.5	15		160811	np					0	0
+!2016-08-11_10h06m.Subject 6	cas9.6	15		160811	np					0	0
+!2016-08-11_11h11m.Subject 7	cas9.7	15		160811	np					0	0
+!2016-08-11_12h19m.Subject 8	cas9.8	15		160811	np					0	0
+!2016-08-11_13h24m.Subject 9	cas9.9	15		160811	np					0	0
+!2016-08-11_11h11m.Subject 10	cas9.10	15		160811	np					0	0
+!2016-08-11_12h19m.Subject 11	cas9.11	15		160811	np					0	0
+!2016-08-11_13h24m.Subject 12	cas9.12	15		160811	np					0	0
+!2016-08-11_07h51m.Subject 13	cas9.13	15		160811	lp					0	0
+!2016-08-11_09h01m.Subject 14	cas9.14	15		160811	lp					0	0
+!2016-08-11_10h06m.Subject 15	cas9.15	15		160811	lp					0	0
+!2016-08-11_07h51m.Subject 16	cas9.16	15		160811	lp					0	0
+!2016-08-11_09h01m.Subject 17	cas9.17	15		160811	lp					0	0
+!2016-08-11_10h06m.Subject 18	cas9.18	15		160811	lp					0	0
+!2016-08-11_11h11m.Subject 19	cas9.19	15		160811	lp					0	0
+!2016-08-11_12h19m.Subject 20	cas9.20	15		160811	lp					0	0
+!2016-08-11_13h24m.Subject 21	cas9.21	15		160811	lp					0	0
+!2016-08-11_11h11m.Subject 22	cas9.22	15		160811	lp					0	0
+!2016-08-11_12h19m.Subject 23	cas9.23	15		160811	lp					0	0
+!2016-08-11_13h24m.Subject 24	cas9.24	15		160811	lp					0	0
+!2016-08-12_08h10m.Subject 1	cas9.1	16		160812	np					0	0
+!2016-08-12_09h33m.Subject 2	cas9.2	16		160812	np					0	0
+!2016-08-12_10h44m.Subject 3	cas9.3	16		160812	np					0	0
+!2016-08-12_08h10m.Subject 4	cas9.4	16		160812	np					0	0
+!2016-08-12_09h33m.Subject 5	cas9.5	16		160812	np					0	0
+!2016-08-12_10h44m.Subject 6	cas9.6	16		160812	np					0	0
+!2016-08-12_11h52m.Subject 7	cas9.7	16		160812	np					0	0
+!2016-08-12_14h19m.Subject 8	cas9.8	16		160812	np					0	0
+!2016-08-12_15h29m.Subject 9	cas9.9	16		160812	np					0	0
+!2016-08-12_11h52m.Subject 10	cas9.10	16		160812	np					0	0
+!2016-08-12_14h19m.Subject 11	cas9.11	16		160812	np					0	0
+!2016-08-12_15h29m.Subject 12	cas9.12	16		160812	np					0	0
+!2016-08-12_08h10m.Subject 13	cas9.13	16		160812	lp					0	0
+!2016-08-12_09h33m.Subject 14	cas9.14	16		160812	lp					0	0
+!2016-08-12_10h44m.Subject 15	cas9.15	16		160812	lp					0	0
+!2016-08-12_08h10m.Subject 16	cas9.16	16		160812	lp					0	0
+!2016-08-12_09h33m.Subject 17	cas9.17	16		160812	lp					0	0
+!2016-08-12_10h44m.Subject 18	cas9.18	16		160812	lp					0	0
+!2016-08-12_11h52m.Subject 19	cas9.19	16		160812	lp					0	0
+!2016-08-12_14h19m.Subject 20	cas9.20	16		160812	lp					0	0
+!2016-08-12_15h29m.Subject 21	cas9.21	16		160812	lp					0	0
+!2016-08-12_11h52m.Subject 22	cas9.22	16		160812	lp					0	0
+!2016-08-12_14h19m.Subject 23	cas9.23	16		160812	lp					0	0
+!2016-08-12_15h29m.Subject 24	cas9.24	16		160812	lp					0	0
