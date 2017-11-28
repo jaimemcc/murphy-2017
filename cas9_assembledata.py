@@ -56,7 +56,7 @@ import timeit
 tic = timeit.default_timer()
 
 userhome = os.path.expanduser('~')
-datafolder = userhome + '\\Dropbox\\Python\\cas9\\cas9_medfiles\\'
+datafolder = userhome + '\\Documents\\GitHub\\murphy-2017\\cas9_medfiles\\'
 
 class Rat(object):
     
@@ -173,28 +173,34 @@ def nplp2Dfig(df, key, ax):
                  scattersize = 60,
                  ax=ax)
 
-metafile = userhome + '/Dropbox/Python/cas9/CAS9_metafile.txt'
+metafile = userhome + '\\Documents\\GitHub\\murphy-2017\\CAS9_metafile.txt'
 metafileData, metafileHeader = jmf.metafilereader(metafile)
 
 exptsuffix = ''
 includecol = 10
 
-rats = {}
-
-for i in metafileData:
-    if int(i[includecol]) == 1:
-        rowrat = str(i[1])
-        if rowrat not in rats:
-            rats[rowrat] = Rat(rowrat)
-        rats[rowrat].loadsession(i, metafileHeader)
-        
-for i in rats:
-    for j in rats[i].sessions:
-#        print('Analysing rat ' + i + ' in session ' + j)
-        x = rats[i].sessions[j]
-        
-        x.lickData_cas = x.extractlicks('casein')
-        x.lickData_malt = x.extractlicks('maltodextrin')
-        x.lickData_sacc = x.extractlicks('saccharin')
-        
-        x.designatesession()
+try:
+    type(rats)
+    print('Using existing data')
+except NameError:
+    print('Assembling data from Med Associates files')
+    
+    rats = {}
+    
+    for i in metafileData:
+        if int(i[includecol]) == 1:
+            rowrat = str(i[1])
+            if rowrat not in rats:
+                rats[rowrat] = Rat(rowrat)
+            rats[rowrat].loadsession(i, metafileHeader)
+            
+    for i in rats:
+        for j in rats[i].sessions:
+    #        print('Analysing rat ' + i + ' in session ' + j)
+            x = rats[i].sessions[j]
+            
+            x.lickData_cas = x.extractlicks('casein')
+            x.lickData_malt = x.extractlicks('maltodextrin')
+            x.lickData_sacc = x.extractlicks('saccharin')
+            
+            x.designatesession()
