@@ -5,6 +5,14 @@ Created on Tue Sep  5 10:32:27 2017
 @author: LocalAdmin1
 """
 
+# Uncomment these imports for R statistics
+statson = True
+if statson == True:
+    import rpy2.robjects as ro
+    from rpy2.robjects import r, pandas2ri, numpy2ri
+    pandas2ri.activate()
+    numpy2ri.activate()
+
 import numpy as np
 import scipy.io as sio
 import matplotlib.pyplot as plt
@@ -44,11 +52,6 @@ col['lp_cas'] = 'xkcd:kelly green'
 col['lp_malt'] = 'xkcd:light green'
 
 import pandas as pd
-import rpy2.robjects as ro
-
-from rpy2.robjects import r, pandas2ri, numpy2ri
-pandas2ri.activate()
-numpy2ri.activate()
 
 import os
 import timeit
@@ -270,6 +273,135 @@ except NameError:
             x.lickData_sacc = x.extractlicks('saccharin')
             
             x.designatesession()
+
+## Analysis of conditioning days
+# Assembling conditioning data
+
+dfc1 = pd.DataFrame([(rats[x].casein1) for x in rats])
+dfc2 = pd.DataFrame([(rats[x].casein2) for x in rats])
+dfm1 = pd.DataFrame([(rats[x].maltodextrin1) for x in rats])
+dfm2 = pd.DataFrame([(rats[x].maltodextrin2) for x in rats])
+
+for df in [dfc1, dfc2, dfm1, dfm2]:
+    df.insert(0,'ratid', [x for x in rats])
+    df.insert(1,'diet', [rats[x].diet for x in rats])
+
+df = pd.concat([dfc1, dfc2, dfm1, dfm2])
+
+df.insert(2,'sol',['c']*48 + ['m']*48)
+df.insert(3,'day',['c1']*24 + ['c2']*24 + ['m1']*24 + ['m2']*24)
+df.insert(4,'cday',[1]*24 + [2]*24 + [1]*24 + [2]*24)
+
+df2 = df[['ratid', 'diet']][:48]
+casall = df[df['day'] == 'c1']['total'] + df[df['day'] == 'c2']['total']
+maltall = df[df['day'] == 'm1']['total'] + df[df['day'] == 'm2']['total']
+
+df2.insert(2,'sol',['c']*24 + ['m']*24)
+df2.insert(3,'total', casall.append(maltall))
+
+def condhistFig(ax, df, factor, sol='maltodextrin'):
+    if sol == 'casein':
+        NRcolor = 'black'
+        PRcolor = 'xkcd:kelly green'
+    else:
+        NRcolor = 'xkcd:silver'
+        PRcolor = 'xkcd:light green'
+        
+    dietmsk = df.diet == 'np'
+
+    shadedError(ax, df[factor][dietmsk], linecolor=NRcolor)
+    ax = shadedError(ax, df[factor][~dietmsk], linecolor=PRcolor)
+    ax.set_xticks([0,10,20,30])
+    ax.set_xticklabels(['0', '20', '40', '60'])
+    
+def cond2Dfig(ax, df, factor, sol='maltodextrin'):
+    if sol == 'casein':
+        day1msk = df.day == 'c1'
+        day2msk = df.day == 'c2'
+    else:
+        day1msk = df.day == 'm1'
+        day2msk = df.day == 'm2'
+        
+    dietmsk = df.diet == 'np'
+   
+    a = [[df[factor][day1msk & dietmsk], df[factor][day2msk & dietmsk]],
+          [df[factor][day1msk & ~dietmsk], df[factor][day2msk & ~dietmsk]]]
+
+    x = data2obj2D(a)
+    
+    if sol == 'casein':
+        barfacecolor = [col['np_cas'], col['np_cas'], col['lp_cas'], col['lp_cas']]
+    else:
+        barfacecolor = [col['np_malt'], col['np_malt'], col['lp_malt'], col['lp_malt']]
+        
+    ax, x, _, _ = jmfig.barscatter(x, paired=True,
+                 barfacecoloroption = 'individual',
+                 barfacecolor = barfacecolor,
+                 scatteredgecolor = ['xkcd:charcoal'],
+                 scatterlinecolor = 'xkcd:charcoal',
+                 grouplabel=['NR', 'PR'],
+                 scattersize = 60,
+                 ax=ax)
+    
+mpl.rcParams['figure.subplot.wspace'] = 0.1
+mpl.rcParams['figure.subplot.left'] = 0.15
+fig, ax = plt.subplots(nrows=1, ncols=2, sharex=True, sharey=True, figsize=(4.8, 3.2))
+
+condhistFig(ax[0], dfc1, 'hist', sol='casein')
+fig.text(0.55, 0.04, 'Time (minutes)', ha='center')
+ax[0].set_ylabel('Licks per 2 min')
+
+condhistFig(ax[1], dfc2, 'hist', sol='casein')
+fig.text(0.55, 0.04, 'Time (minutes)', ha='center')
+
+fig, ax = plt.subplots(nrows=1, ncols=1, sharex=True, sharey=True, figsize=(3.2, 3.2))
+cond2Dfig(ax, df, 'total', sol='casein')
+
+fig, ax = plt.subplots(nrows=1, ncols=2, sharex=True, sharey=True, figsize=(4.8, 3.2))
+condhistFig(ax[0], dfm1, 'hist')
+fig.text(0.55, 0.04, 'Time (minutes)', ha='center')
+ax[0].set_ylabel('Licks per 2 min')
+
+condhistFig(ax[1], dfm2, 'hist')
+fig.text(0.55, 0.04, 'Time (minutes)', ha='center')
+
+fig, ax = plt.subplots(nrows=1, ncols=1, sharex=True, sharey=True, figsize=(3.2, 3.2))
+cond2Dfig(ax, df, 'total')
+
+## Statistics with R - conditioning
+# Day 1 vs 2, PR vs NR for CASEIN
+solmsk = df.sol == 'c'
+r_df = df[['ratid', 'diet', 'cday', 'total']][solmsk]
+ro.globalenv['r_df'] = r_df
+
+ro.r('casein_cond = aov(formula = total ~ cday * diet + Error(ratid / cday), data = r_df)')
+print('Casein during conditioning')
+print(ro.r('summary(casein_cond)'))
+
+# Day 1 vs 2, PR vs NR for CASEIN
+solmsk = df.sol == 'm'
+r_df = df[['ratid', 'diet', 'cday', 'total']][solmsk]
+ro.globalenv['r_df'] = r_df
+
+ro.r('malto_cond = aov(formula = total ~ cday * diet + Error(ratid / cday), data = r_df)')
+print('Maltodextrin during conditioning')
+print(ro.r('summary(malto_cond)'))
+
+# Figure of total licks during conditioning
+fig = plt.figure(figsize=(3.2, 2.4))
+ax = plt.subplot(1,1,1)
+nplp2Dfig(df2, 'total', ax=ax)
+plt.yticks([0, 5000, 10000, 15000], ('0', '5', '10', '15'))
+ax.set_ylabel('Licks (x1000)')
+#plt.savefig('ADD FILEPATH/03_condlicks.eps')
+plt.title('Consumption during conditioning')
+
+if statson == True:
+    r_df = df2[['ratid', 'sol', 'diet', 'total']]
+    ro.globalenv['r_df'] = r_df
+    ro.r('condlicks = aov(formula = total ~ sol * diet + Error(ratid / sol), data = r_df)')
+    print('Licks during conditioning')
+    print(ro.r('summary(condlicks)'))
 
 # Analysis of Preference Day 1
 
