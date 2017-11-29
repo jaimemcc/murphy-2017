@@ -378,6 +378,14 @@ ro.r('casein_cond = aov(formula = total ~ cday * diet + Error(ratid / cday), dat
 print('Casein during conditioning')
 print(ro.r('summary(casein_cond)'))
 
+ro.r('pr_cas_day12 = t.test(r_df$total[r_df$diet=="lp" & r_df$cday=="1"], r_df$total[r_df$diet=="lp" & r_df$cday=="2"], paired=TRUE)')
+print('LOW PROTEIN rats (licks per CASEIN conditioning) - day 1 vs. day 2')
+print(ro.r('pr_cas_day12'))
+
+ro.r('nr_cas_day12 = t.test(r_df$total[r_df$diet=="np" & r_df$cday=="1"], r_df$total[r_df$diet=="np" & r_df$cday=="2"], paired=TRUE)')
+print('NORMAL PROTEIN rats (licks per CASEIN conditioning) - day 1 vs. day 2')
+print(ro.r('nr_cas_day12'))
+
 # Day 1 vs 2, PR vs NR for CASEIN
 solmsk = df.sol == 'm'
 r_df = df[['ratid', 'diet', 'cday', 'total']][solmsk]
@@ -386,6 +394,14 @@ ro.globalenv['r_df'] = r_df
 ro.r('malto_cond = aov(formula = total ~ cday * diet + Error(ratid / cday), data = r_df)')
 print('Maltodextrin during conditioning')
 print(ro.r('summary(malto_cond)'))
+
+#ro.r('pr_malt_day12 = t.test(r_df$total[r_df$diet=="lp" & r_df$cday=="1"], r_df$total[r_df$diet=="lp" & r_df$cday=="2"], paired=TRUE)')
+#print('LOW PROTEIN rats (licks per MALTO conditioning) - day 1 vs. day 2')
+#print(ro.r('pr_malt_day12'))
+#
+#ro.r('nr_malt_day12 = t.test(r_df$total[r_df$diet=="np" & r_df$cday=="1"], r_df$total[r_df$diet=="np" & r_df$cday=="2"], paired=TRUE)')
+#print('NORMAL PROTEIN rats (licks per MALTO conditioning) - day 1 vs. day 2')
+#print(ro.r('nr_malt_day12'))
 
 # Figure of total licks during conditioning
 fig = plt.figure(figsize=(3.2, 2.4))
