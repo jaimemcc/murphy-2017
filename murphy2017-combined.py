@@ -6,7 +6,7 @@ Created on Tue Sep  5 10:32:27 2017
 """
 
 # Uncomment these imports for R statistics
-statson = True
+statson = False
 if statson == True:
     import rpy2.robjects as ro
     from rpy2.robjects import r, pandas2ri, numpy2ri
@@ -299,6 +299,11 @@ maltall = df[df['day'] == 'm1']['total'] + df[df['day'] == 'm2']['total']
 df2.insert(2,'sol',['c']*24 + ['m']*24)
 df2.insert(3,'total', casall.append(maltall))
 
+df3 = df[['ratid', 'diet', 'sol', 'total']]
+
+### Need to append preference data to this df so that I can compare different
+### amounts of licks
+
 def condhistFig(ax, df, factor, sol='maltodextrin'):
     if sol == 'casein':
         NRcolor = 'black'
@@ -370,38 +375,40 @@ cond2Dfig(ax, df, 'total')
 
 ## Statistics with R - conditioning
 # Day 1 vs 2, PR vs NR for CASEIN
-solmsk = df.sol == 'c'
-r_df = df[['ratid', 'diet', 'cday', 'total']][solmsk]
-ro.globalenv['r_df'] = r_df
 
-ro.r('casein_cond = aov(formula = total ~ cday * diet + Error(ratid / cday), data = r_df)')
-print('Casein during conditioning')
-print(ro.r('summary(casein_cond)'))
-
-ro.r('pr_cas_day12 = t.test(r_df$total[r_df$diet=="lp" & r_df$cday=="1"], r_df$total[r_df$diet=="lp" & r_df$cday=="2"], paired=TRUE)')
-print('LOW PROTEIN rats (licks per CASEIN conditioning) - day 1 vs. day 2')
-print(ro.r('pr_cas_day12'))
-
-ro.r('nr_cas_day12 = t.test(r_df$total[r_df$diet=="np" & r_df$cday=="1"], r_df$total[r_df$diet=="np" & r_df$cday=="2"], paired=TRUE)')
-print('NORMAL PROTEIN rats (licks per CASEIN conditioning) - day 1 vs. day 2')
-print(ro.r('nr_cas_day12'))
-
-# Day 1 vs 2, PR vs NR for CASEIN
-solmsk = df.sol == 'm'
-r_df = df[['ratid', 'diet', 'cday', 'total']][solmsk]
-ro.globalenv['r_df'] = r_df
-
-ro.r('malto_cond = aov(formula = total ~ cday * diet + Error(ratid / cday), data = r_df)')
-print('Maltodextrin during conditioning')
-print(ro.r('summary(malto_cond)'))
-
-#ro.r('pr_malt_day12 = t.test(r_df$total[r_df$diet=="lp" & r_df$cday=="1"], r_df$total[r_df$diet=="lp" & r_df$cday=="2"], paired=TRUE)')
-#print('LOW PROTEIN rats (licks per MALTO conditioning) - day 1 vs. day 2')
-#print(ro.r('pr_malt_day12'))
-#
-#ro.r('nr_malt_day12 = t.test(r_df$total[r_df$diet=="np" & r_df$cday=="1"], r_df$total[r_df$diet=="np" & r_df$cday=="2"], paired=TRUE)')
-#print('NORMAL PROTEIN rats (licks per MALTO conditioning) - day 1 vs. day 2')
-#print(ro.r('nr_malt_day12'))
+if statson == True:
+    solmsk = df.sol == 'c'
+    r_df = df[['ratid', 'diet', 'cday', 'total']][solmsk]
+    ro.globalenv['r_df'] = r_df
+    
+    ro.r('casein_cond = aov(formula = total ~ cday * diet + Error(ratid / cday), data = r_df)')
+    print('Casein during conditioning')
+    print(ro.r('summary(casein_cond)'))
+    
+    ro.r('pr_cas_day12 = t.test(r_df$total[r_df$diet=="lp" & r_df$cday=="1"], r_df$total[r_df$diet=="lp" & r_df$cday=="2"], paired=TRUE)')
+    print('LOW PROTEIN rats (licks per CASEIN conditioning) - day 1 vs. day 2')
+    print(ro.r('pr_cas_day12'))
+    
+    ro.r('nr_cas_day12 = t.test(r_df$total[r_df$diet=="np" & r_df$cday=="1"], r_df$total[r_df$diet=="np" & r_df$cday=="2"], paired=TRUE)')
+    print('NORMAL PROTEIN rats (licks per CASEIN conditioning) - day 1 vs. day 2')
+    print(ro.r('nr_cas_day12'))
+    
+    # Day 1 vs 2, PR vs NR for CASEIN
+    solmsk = df.sol == 'm'
+    r_df = df[['ratid', 'diet', 'cday', 'total']][solmsk]
+    ro.globalenv['r_df'] = r_df
+    
+    ro.r('malto_cond = aov(formula = total ~ cday * diet + Error(ratid / cday), data = r_df)')
+    print('Maltodextrin during conditioning')
+    print(ro.r('summary(malto_cond)'))
+    
+    #ro.r('pr_malt_day12 = t.test(r_df$total[r_df$diet=="lp" & r_df$cday=="1"], r_df$total[r_df$diet=="lp" & r_df$cday=="2"], paired=TRUE)')
+    #print('LOW PROTEIN rats (licks per MALTO conditioning) - day 1 vs. day 2')
+    #print(ro.r('pr_malt_day12'))
+    #
+    #ro.r('nr_malt_day12 = t.test(r_df$total[r_df$diet=="np" & r_df$cday=="1"], r_df$total[r_df$diet=="np" & r_df$cday=="2"], paired=TRUE)')
+    #print('NORMAL PROTEIN rats (licks per MALTO conditioning) - day 1 vs. day 2')
+    #print(ro.r('nr_malt_day12'))
 
 # Figure of total licks during conditioning
 fig = plt.figure(figsize=(3.2, 2.4))
@@ -519,89 +526,55 @@ plt.title('Casein preference')
 mpl.rcParams['figure.subplot.left'] = 0.15
 
 ## Statistics with R
+if statson == True:
+    r_df = df[['ratid', 'sol', 'diet', 'total', 'bMean', 'bNum']]
+    ro.globalenv['r_df'] = r_df
+    
+    ro.r('totallicks = aov(formula = total ~ sol * diet + Error(ratid / sol), data = r_df)')
+    ro.r('burstMean = aov(formula = bMean ~ sol * diet + Error(ratid / sol), data = r_df)')
+    ro.r('burstNum = aov(formula = bNum ~ sol * diet + Error(ratid / sol), data = r_df)')
+    
+    print('Total licks')
+    print(ro.r('summary(totallicks)'))
+    
+    ro.r('np_casvmalt = t.test(r_df$total[r_df$diet=="np" & r_df$sol=="c"], r_df$total[r_df$diet=="np" & r_df$sol=="m"], paired=TRUE)')
+    print('Normal protein rats - casein vs. maltodextrin')
+    print(ro.r('np_casvmalt'))
+    
+    ro.r('lp_casvmalt = t.test(r_df$total[r_df$diet=="lp" & r_df$sol=="c"], r_df$total[r_df$diet=="lp" & r_df$sol=="m"], paired=TRUE)')
+    print('LOW PROTEIN rats - casein vs. maltodextrin')
+    print(ro.r('lp_casvmalt'))
+    
+    # Analysis of Licks per burst
+    
+    print('Licks per burst')
+    print(ro.r('summary(burstMean)'))
+    
+    ro.r('np_casvmalt = t.test(r_df$bMean[r_df$diet=="np" & r_df$sol=="c"], r_df$bMean[r_df$diet=="np" & r_df$sol=="m"], paired=TRUE)')
+    print('Normal protein rats (licks per burst) - casein vs. maltodextrin')
+    print(ro.r('np_casvmalt'))
+    
+    ro.r('lp_casvmalt = t.test(r_df$bMean[r_df$diet=="lp" & r_df$sol=="c"], r_df$bMean[r_df$diet=="lp" & r_df$sol=="m"], paired=TRUE)')
+    print('LOW PROTEIN rats (licks per burst) - casein vs. maltodextrin')
+    print(ro.r('lp_casvmalt'))
+    
+    
+    print('Number of bursts')
+    print(ro.r('summary(burstNum)'))
+    
+    ro.r('np_casvmalt = t.test(r_df$bNum[r_df$diet=="np" & r_df$sol=="c"], r_df$bNum[r_df$diet=="np" & r_df$sol=="m"], paired=TRUE)')
+    print('Normal protein rats (burst number) - casein vs. maltodextrin')
+    print(ro.r('np_casvmalt'))
+    
+    ro.r('lp_casvmalt = t.test(r_df$bNum[r_df$diet=="lp" & r_df$sol=="c"], r_df$bNum[r_df$diet=="lp" & r_df$sol=="m"], paired=TRUE)')
+    print('LOW PROTEIN rats (burst number) - casein vs. maltodextrin')
+    print(ro.r('lp_casvmalt'))
+    
+    # Analysis of protein preference
+    
+    ro.globalenv['nppref'] = df2[df2['diet'] == 'np']
+    ro.globalenv['lppref'] = df2[df2['diet'] != 'np']
+    
+    ro.r('proteinPref = t.test(nppref[\'pref\'], lppref[\'pref\'], paired=FALSE)')
+    print(ro.r('proteinPref'))
 
-r_df = df[['ratid', 'sol', 'diet', 'total', 'bMean', 'bNum']]
-ro.globalenv['r_df'] = r_df
-
-ro.r('totallicks = aov(formula = total ~ sol * diet + Error(ratid / sol), data = r_df)')
-ro.r('burstMean = aov(formula = bMean ~ sol * diet + Error(ratid / sol), data = r_df)')
-ro.r('burstNum = aov(formula = bNum ~ sol * diet + Error(ratid / sol), data = r_df)')
-
-print('Total licks')
-print(ro.r('summary(totallicks)'))
-
-ro.r('np_casvmalt = t.test(r_df$total[r_df$diet=="np" & r_df$sol=="c"], r_df$total[r_df$diet=="np" & r_df$sol=="m"], paired=TRUE)')
-print('Normal protein rats - casein vs. maltodextrin')
-print(ro.r('np_casvmalt'))
-
-ro.r('lp_casvmalt = t.test(r_df$total[r_df$diet=="lp" & r_df$sol=="c"], r_df$total[r_df$diet=="lp" & r_df$sol=="m"], paired=TRUE)')
-print('LOW PROTEIN rats - casein vs. maltodextrin')
-print(ro.r('lp_casvmalt'))
-
-# Analysis of Licks per burst
-
-print('Licks per burst')
-print(ro.r('summary(burstMean)'))
-
-ro.r('np_casvmalt = t.test(r_df$bMean[r_df$diet=="np" & r_df$sol=="c"], r_df$bMean[r_df$diet=="np" & r_df$sol=="m"], paired=TRUE)')
-print('Normal protein rats (licks per burst) - casein vs. maltodextrin')
-print(ro.r('np_casvmalt'))
-
-ro.r('lp_casvmalt = t.test(r_df$bMean[r_df$diet=="lp" & r_df$sol=="c"], r_df$bMean[r_df$diet=="lp" & r_df$sol=="m"], paired=TRUE)')
-print('LOW PROTEIN rats (licks per burst) - casein vs. maltodextrin')
-print(ro.r('lp_casvmalt'))
-
-
-print('Number of bursts')
-print(ro.r('summary(burstNum)'))
-
-ro.r('np_casvmalt = t.test(r_df$bNum[r_df$diet=="np" & r_df$sol=="c"], r_df$bNum[r_df$diet=="np" & r_df$sol=="m"], paired=TRUE)')
-print('Normal protein rats (burst number) - casein vs. maltodextrin')
-print(ro.r('np_casvmalt'))
-
-ro.r('lp_casvmalt = t.test(r_df$bNum[r_df$diet=="lp" & r_df$sol=="c"], r_df$bNum[r_df$diet=="lp" & r_df$sol=="m"], paired=TRUE)')
-print('LOW PROTEIN rats (burst number) - casein vs. maltodextrin')
-print(ro.r('lp_casvmalt'))
-
-# Analysis of protein preference
-
-ro.globalenv['nppref'] = df2[df2['diet'] == 'np']
-ro.globalenv['lppref'] = df2[df2['diet'] != 'np']
-
-ro.r('proteinPref = t.test(nppref[\'pref\'], lppref[\'pref\'], paired=FALSE)')
-print(ro.r('proteinPref'))
-
-
-#from rpy2.robjects.packages import importr
-#from rpy2.robjects.vectors import StrVector
-#
-#stats = importr('stats')
-#base = importr('base')
-#datasets = importr('datasets')
-
-#myresult = stats.t_test(data_pref1['cas_pref'][msk], data_pref1['cas_pref'][~msk],
-#                        **{'paired': False})
-#
-
-#r_df = pandas2ri.py2ri(df[['ratid', 'sol', 'diet', 'total', 'bMean', 'bNum']])
-#ro.r('r_df[, \'sol\'] <- as.factor(r_df[, \'sol\'])')
-#ro.r('r_df[, \'diet\'] <- as.factor(r_df[, \'diet\'])')
-#ro.r('r_df[, \'ratid\'] <- as.factor(r_df[, \'ratid\'])')
-
-#ro.globalenv['r_df'] = ro.r(pandas2ri.py2ri(df[['ratid', 'sol', 'diet', 'total', 'bMean', 'bNum']]))
-#
-#
-#ro.r('result = aov(formula = licks ~ sol * diet + Error(ratid / sol), data = cas9_pref1_r)')
-#myresult2 = ro.r('summary(result)')
-#
-#print(myresult2)
-#
-##myresult2 = stats.aov(data ~ sol * diet)
-#
-##z = pd.DataFrame([vars(x) for x in rats.preference1_cas])
-
-#filename = userhome + '\\Dropbox\\Python\\cas9\\cas9_stats\\cas9_pref1_r2.csv'
-#r_df.to_csv(filename)
-#ro.r('library(readr)')
-#ro.r('cas9_pref1_r <- read_csv("C:/Users/James Rig/Dropbox/Python/cas9/cas9_stats/cas9_pref1_r2.csv",col_types = cols(diet = col_factor(levels = c("np","lp")), sol = col_factor(levels = c("c","m"))))')
-#
