@@ -6,7 +6,10 @@ Created on Tue Sep  5 10:32:27 2017
 """
 
 # Uncomment these imports for R statistics
+makefigs = True
+savefigs = False
 statson = False
+
 if statson == True:
     import rpy2.robjects as ro
     from rpy2.robjects import r, pandas2ri, numpy2ri
@@ -329,17 +332,17 @@ def cond2Dfig(ax, df, factor, sol='maltodextrin'):
         
     dietmsk = df.diet == 'np'
    
-    a = [[df[factor][day1msk & dietmsk], df[factor][day2msk & dietmsk]],
-          [df[factor][day1msk & ~dietmsk], df[factor][day2msk & ~dietmsk]]]
+    a = [[df[factor][day1msk & dietmsk], df[factor][day1msk & ~dietmsk]],
+          [df[factor][day2msk & dietmsk], df[factor][day2msk & ~dietmsk]]]
 
     x = data2obj2D(a)
     
     if sol == 'casein':
-        barfacecolor = [col['np_cas'], col['np_cas'], col['lp_cas'], col['lp_cas']]
+        barfacecolor = [col['np_cas'], col['lp_cas'], col['np_cas'], col['lp_cas']]
     else:
-        barfacecolor = [col['np_malt'], col['np_malt'], col['lp_malt'], col['lp_malt']]
+        barfacecolor = [col['np_malt'], col['lp_malt'], col['np_malt'], col['lp_malt']]
         
-    ax, x, _, _ = jmfig.barscatter(x, paired=True,
+    ax, x, _, _ = jmfig.barscatter(x, paired=False,
                  barfacecoloroption = 'individual',
                  barfacecolor = barfacecolor,
                  scatteredgecolor = ['xkcd:charcoal'],
@@ -411,13 +414,15 @@ if statson == True:
     #print(ro.r('nr_malt_day12'))
 
 # Figure of total licks during conditioning
-fig = plt.figure(figsize=(3.2, 2.4))
-ax = plt.subplot(1,1,1)
-nplp2Dfig(df2, 'total', ax=ax)
-plt.yticks([0, 5000, 10000, 15000], ('0', '5', '10', '15'))
-ax.set_ylabel('Licks (x1000)')
-#plt.savefig('ADD FILEPATH/03_condlicks.eps')
-plt.title('Consumption during conditioning')
+
+if makefigs == True:
+    fig = plt.figure(figsize=(3.2, 2.4))
+    ax = plt.subplot(1,1,1)
+    nplp2Dfig(df2, 'total', ax=ax)
+    plt.yticks([0, 5000, 10000, 15000], ('0', '5', '10', '15'))
+    ax.set_ylabel('Licks (x1000)')
+    #plt.savefig('ADD FILEPATH/03_condlicks.eps')
+    plt.title('Consumption during conditioning')
 
 if statson == True:
     r_df = df2[['ratid', 'sol', 'diet', 'total']]
@@ -444,59 +449,60 @@ pref = df.total[:24]/(df.total[:24]+df.total[24:])
 df2.insert(2,'pref', pref)
 
 # Figure 3A - Licks over time, histogram
-mpl.rcParams['figure.subplot.wspace'] = 0.1
-mpl.rcParams['figure.subplot.left'] = 0.15
-fig, ax = plt.subplots(nrows=1, ncols=2, sharex=True, sharey=True, figsize=(3.2, 2.4))
-
-prefhistFig(ax[0], ax[1], df, 'hist')
-fig.text(0.55, 0.04, 'Time (min)', ha='center')
-ax[0].set_ylabel('Licks per 2 min')
-plt.savefig(userhome + '\\Dropbox\\Python\\cas9\\cas9_figs\\04_prefhist.eps')
+if makefigs == True:
+    mpl.rcParams['figure.subplot.wspace'] = 0.1
+    mpl.rcParams['figure.subplot.left'] = 0.15
+    fig, ax = plt.subplots(nrows=1, ncols=2, sharex=True, sharey=True, figsize=(3.2, 2.4))
+    
+    prefhistFig(ax[0], ax[1], df, 'hist')
+    fig.text(0.55, 0.04, 'Time (min)', ha='center')
+    ax[0].set_ylabel('Licks per 2 min')
+    plt.savefig(userhome + '\\Dropbox\\Python\\cas9\\cas9_figs\\04_prefhist.eps')
 
 
 # Figure 3B - casein licks vs maltodextrin licks
-mpl.rcParams['figure.subplot.left'] = 0.25
-fig = plt.figure(figsize=(2.4, 2.4))
-ax = plt.subplot(1,1,1)                
-casVmaltFig(ax, df)
-ax.set_xlabel('Licks for casein')
-ax.set_ylabel('Licks for maltodextrin')
-plt.yticks([0, 2000, 4000, 6000])
-plt.savefig(userhome + '\\Dropbox\\Python\\cas9\\cas9_figs\\05_casvmalt.eps')
-
-mpl.rcParams['figure.subplot.left'] = 0.15
+    mpl.rcParams['figure.subplot.left'] = 0.25
+    fig = plt.figure(figsize=(2.4, 2.4))
+    ax = plt.subplot(1,1,1)                
+    casVmaltFig(ax, df)
+    ax.set_xlabel('Licks for casein')
+    ax.set_ylabel('Licks for maltodextrin')
+    plt.yticks([0, 2000, 4000, 6000])
+    plt.savefig(userhome + '\\Dropbox\\Python\\cas9\\cas9_figs\\05_casvmalt.eps')
+    
+    mpl.rcParams['figure.subplot.left'] = 0.15
 
 # Figure 3C - casein and malt preference (licks)
 
 # Analysis of licks
-fig = plt.figure(figsize=(3.2, 2.4))
-ax = plt.subplot(1,1,1) 
-nplp2Dfig(df, 'total', ax)
-ax.set_ylabel('Licks (x1000)')
-plt.yticks([0, 2000, 4000, 6000], ('0', '2', '4', '6'))
-plt.savefig(userhome + '\\Dropbox\\Python\\cas9\\cas9_figs\\06_preftotal.eps')
-plt.title('Casein vs. maltodextrin')
+    fig = plt.figure(figsize=(3.2, 2.4))
+    ax = plt.subplot(1,1,1) 
+    nplp2Dfig(df, 'total', ax)
+    ax.set_ylabel('Licks (x1000)')
+    plt.yticks([0, 2000, 4000, 6000], ('0', '2', '4', '6'))
+    plt.savefig(userhome + '\\Dropbox\\Python\\cas9\\cas9_figs\\06_preftotal.eps')
+    plt.title('Casein vs. maltodextrin')
 
 # Analysis of palatability
 
 # Figure 4A - licks per burst
 
-fig = plt.figure(figsize=(3.2, 2.4))
-ax = plt.subplot(1,1,1)
-nplp2Dfig(df, 'bMean', ax)
-ax.set_ylabel('Average licks per cluster')
-ax.set_yticks([0, 50, 100, 150])
-plt.savefig(userhome + '\\Dropbox\\Python\\cas9\\cas9_figs\\07_prefburstmean.eps')
-plt.title('Licks per burst')
-
-fig = plt.figure(figsize=(3.2, 2.4))
-ax = plt.subplot(1,1,1)
-nplp2Dfig(df, 'bNum', ax)
-ax.set_ylabel('Number of clusters')
-ax.set_yticks([0, 50, 100, 150, 200])
-plt.savefig(userhome + '\\Dropbox\\Python\\cas9\\cas9_figs\\08_prefburstnum.eps',
-            transparent=True)
-plt.title('Number of bursts')
+    fig = plt.figure(figsize=(3.2, 2.4))
+    ax = plt.subplot(1,1,1)
+    nplp2Dfig(df, 'bMean', ax)
+    ax.set_ylabel('Average licks per cluster')
+    ax.set_yticks([0, 50, 100, 150])
+    plt.savefig(userhome + '\\Dropbox\\Python\\cas9\\cas9_figs\\07_prefburstmean.eps')
+    plt.title('Licks per burst')
+    
+    fig = plt.figure(figsize=(3.2, 2.4))
+    ax = plt.subplot(1,1,1)
+    nplp2Dfig(df, 'bNum', ax)
+    ax.set_ylabel('Number of clusters')
+    ax.set_yticks([0, 50, 100, 150, 200])
+    plt.savefig(userhome + '\\Dropbox\\Python\\cas9\\cas9_figs\\08_prefburstnum.eps',
+                transparent=True)
+    plt.title('Number of bursts')
 
 
 # Figure 3D - protein preference
@@ -504,26 +510,27 @@ plt.title('Number of bursts')
 dietmsk = df2.diet == 'np'
 a = data2obj1D([df2['pref'][dietmsk], df2['pref'][~dietmsk]])
 
-mpl.rcParams['figure.subplot.left'] = 0.25
-fig = plt.figure(figsize=(1.8, 2.4))
-ax = plt.subplot(1,1,1)
-jmfig.barscatter(a, barfacecoloroption = 'between', barfacecolor = ['xkcd:silver', 'xkcd:kelly green'],
-                     scatteredgecolor = ['black'],
-                     scatterlinecolor = 'black',
-                     grouplabel=['NR', 'PR'],
-                     barwidth = 0.8,
-                     scattersize = 40,
-                     ylabel = 'Casein preference',
-                     ax=ax)
-ax.set_yticks([0, 0.5, 1.0])
-ax.set_xlim([0.25,2.75])
-ax.set_ylim([0, 1.1])
-ax.set_ylabel('Casein preference')
-plt.savefig(userhome + '\\Dropbox\\Python\\cas9\\cas9_figs\\09_caseinpref.eps',
-            transparent=True)
-plt.title('Casein preference')
-
-mpl.rcParams['figure.subplot.left'] = 0.15
+if makefigs == True:
+    mpl.rcParams['figure.subplot.left'] = 0.25
+    fig = plt.figure(figsize=(1.8, 2.4))
+    ax = plt.subplot(1,1,1)
+    jmfig.barscatter(a, barfacecoloroption = 'between', barfacecolor = ['xkcd:silver', 'xkcd:kelly green'],
+                         scatteredgecolor = ['black'],
+                         scatterlinecolor = 'black',
+                         grouplabel=['NR', 'PR'],
+                         barwidth = 0.8,
+                         scattersize = 40,
+                         ylabel = 'Casein preference',
+                         ax=ax)
+    ax.set_yticks([0, 0.5, 1.0])
+    ax.set_xlim([0.25,2.75])
+    ax.set_ylim([0, 1.1])
+    ax.set_ylabel('Casein preference')
+    plt.savefig(userhome + '\\Dropbox\\Python\\cas9\\cas9_figs\\09_caseinpref.eps',
+                transparent=True)
+    plt.title('Casein preference')
+    
+    mpl.rcParams['figure.subplot.left'] = 0.15
 
 ## Statistics with R
 if statson == True:
