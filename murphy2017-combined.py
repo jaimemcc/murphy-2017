@@ -6,8 +6,8 @@ Created on Tue Sep  5 10:32:27 2017
 """
 
 # Uncomment these imports for R statistics
-makefigs = True
-savefigs = True
+makefigs = False
+savefigs = False
 statson = False
 
 if statson == True:
@@ -441,7 +441,7 @@ maltall = df[df['day'] == 'm1']['total'] + df[df['day'] == 'm2']['total']
 df2.insert(2,'sol',['c']*24 + ['m']*24)
 df2.insert(3,'total', casall.append(maltall))
 
-df3 = df[['ratid', 'diet', 'sol', 'total']]
+df3 = df[['ratid', 'diet', 'day', 'total']]
 
 ### Need to append preference data to this df so that I can compare different
 ### amounts of licks
@@ -553,6 +553,23 @@ df.insert(2,'sol',['c']*24 + ['m']*24)
 df2 = df[['ratid', 'diet']][:24]
 pref = df.total[:24]/(df.total[:24]+df.total[24:])
 df2.insert(2,'pref', pref)
+
+# Combining dfs from conditioning and preference day to look at changes in total licks
+df4 = df[['ratid', 'diet']][:24]
+df4.insert(2, 'cday', [5]*24)
+prefdaytotal = (df.total[:24]+df.total[24:])
+df4.insert(3,'total',prefdaytotal)
+
+df5 = pd.concat([df3, df4])
+
+#if statson == True:
+#daymsk = df.day == 'c'
+#r_df = df5[['ratid', 'diet', 'day', 'total']][solmsk]
+#ro.globalenv['r_df'] = r_df
+#    
+#    ro.r('casein_cond = aov(formula = total ~ cday * diet + Error(ratid / cday), data = r_df)')
+#    print('Casein during conditioning')
+#    print(ro.r('summary(casein_cond)'))
 
 # Figure 3A - Licks over time, histogram
 if makefigs == True:
