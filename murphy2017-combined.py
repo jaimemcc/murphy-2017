@@ -6,9 +6,9 @@ Created on Tue Sep  5 10:32:27 2017
 """
 
 # Uncomment these imports for R statistics
-makefigs = False
-savefigs = False
-statson = True
+makefigs = True
+savefigs = True
+statson = False
 
 if statson == True:
     import rpy2.robjects as ro
@@ -291,10 +291,8 @@ def cond2Dfig(ax, df, factor, sol='maltodextrin'):
                  ax=ax)
 
 def sidakcorr(robj, ncomps=3):
-    pval = robj.rx('p.value')
-    print(pval)
-    print(1-pval)
-#    corr_p = 1-((1-pval)^ncomps)   
+    pval = (list(robj.rx('p.value'))[0])[0]
+    corr_p = 1-((1-pval)**ncomps)   
     return corr_p
 
 metafile = userhome + '\\Documents\\GitHub\\murphy-2017\\CAS9_metafile.txt'
@@ -358,16 +356,17 @@ lp_mean = data[data['diet'] == 'lp'].mean()
 lp_sem = data[data['diet'] == 'lp'].std() / np.sqrt(len(data['diet'] == 'lp'))
 
 # Figure 1A - Body weight
-fig1a = plt.figure(figsize=(3.2,2.4))
-ax = plt.subplot(1,1,1)
-np_mean.plot(yerr=np_sem, color='xkcd:charcoal', marker='o', markerfacecolor='white')
-lp_mean.plot(yerr=lp_sem, color='xkcd:kelly green', marker='o', markerfacecolor='white')
-ax.set_ylim([400, 550])
-ax.set_xlim([-1, 17])
-plt.xticks([1,6,11,16], ('0', '5', '10', '15'))
-plt.yticks([400, 450, 500, 550])
-ax.set_ylabel('Body weight (g)')
-ax.set_xlabel('Days since diet switch')
+if makefigs == True:
+    fig1a = plt.figure(figsize=(3.2,2.4))
+    ax = plt.subplot(1,1,1)
+    np_mean.plot(yerr=np_sem, color='xkcd:charcoal', marker='o', markerfacecolor='white')
+    lp_mean.plot(yerr=lp_sem, color='xkcd:kelly green', marker='o', markerfacecolor='white')
+    ax.set_ylim([400, 550])
+    ax.set_xlim([-1, 17])
+    plt.xticks([1,6,11,16], ('0', '5', '10', '15'))
+    plt.yticks([400, 450, 500, 550])
+    ax.set_ylabel('Body weight (g)')
+    ax.set_xlabel('Days since diet switch')
 
 # Figure 1B - Food intake
 # Data from CAS9_exptdetails.xls > fi_cas9+cas56
@@ -378,36 +377,37 @@ foodintake_lp = [25.5, 27.3, 29.1, 28.5]
 foodintake_npAll = [22.0, 25.6, 27.6, 26.1, 22.9, 21.0, 21.3, 20.6]
 foodintake_lpAll = [25.5, 27.3, 29.1, 28.5, 27.4, 29.9, 23.5, 26.3]
 
-fi = data2obj1D([foodintake_np, foodintake_lp])
+if makefigs == True:
+    
+    fi = data2obj1D([foodintake_np, foodintake_lp])
+    mpl.rcParams['figure.subplot.left'] = 0.25
+    fig1b = plt.figure(figsize=(1.8,2.4))
+    ax = plt.subplot(1,1,1)
+    jmfig.barscatter(fi, barfacecoloroption='individual',
+                     barwidth = 0.8,
+                     barfacecolor = ['xkcd:silver', 'xkcd:kelly green'],
+                     scatteredgecolor = ['xkcd:charcoal'],
+                     scattersize = 40,
+                     ylabel = 'Average food intake (g/day)',
+                     grouplabel=['NR', 'PR'],
+                     ax=ax)
+    plt.yticks([0, 10, 20, 30])
+    ax.set_xlim([0.25,2.75])
+    ax.set_ylim([0, 35])
 
-mpl.rcParams['figure.subplot.left'] = 0.25
-fig1b = plt.figure(figsize=(1.8,2.4))
-ax = plt.subplot(1,1,1)
-jmfig.barscatter(fi, barfacecoloroption='individual',
-                 barwidth = 0.8,
-                 barfacecolor = ['xkcd:silver', 'xkcd:kelly green'],
-                 scatteredgecolor = ['xkcd:charcoal'],
-                 scattersize = 40,
-                 ylabel = 'Average food intake (g/day)',
-                 grouplabel=['NR', 'PR'],
-                 ax=ax)
-plt.yticks([0, 10, 20, 30])
-ax.set_xlim([0.25,2.75])
-ax.set_ylim([0, 35])
-
-fi = data2obj1D([foodintake_npAll, foodintake_lpAll])
-fig1b2 = plt.figure(figsize=(1.8,2.4))
-ax = plt.subplot(1,1,1)
-jmfig.barscatter(fi, barfacecoloroption='individual',
-                 barwidth = 0.8,
-                 barfacecolor = ['xkcd:silver', 'xkcd:kelly green'],
-                 scatteredgecolor = ['xkcd:charcoal'],
-                 scattersize = 40,
-                 grouplabel=['NR', 'PR'],
-                 ax=ax)
-plt.yticks([0, 10, 20, 30])
-ax.set_xlim([0.25,2.75])
-ax.set_ylim([0, 35])
+    fi = data2obj1D([foodintake_npAll, foodintake_lpAll])
+    fig1b2 = plt.figure(figsize=(1.8,2.4))
+    ax = plt.subplot(1,1,1)
+    jmfig.barscatter(fi, barfacecoloroption='individual',
+                     barwidth = 0.8,
+                     barfacecolor = ['xkcd:silver', 'xkcd:kelly green'],
+                     scatteredgecolor = ['xkcd:charcoal'],
+                     scattersize = 40,
+                     grouplabel=['NR', 'PR'],
+                     ax=ax)
+    plt.yticks([0, 10, 20, 30])
+    ax.set_xlim([0.25,2.75])
+    ax.set_ylim([0, 35])
 
 
 mpl.rcParams['figure.subplot.left'] = 0.15
@@ -455,6 +455,7 @@ if makefigs == True:
     condhistFig(ax[0], dfc1, 'hist', sol='casein')
     fig2a.text(0.55, 0.04, 'Time (minutes)', ha='center')
     ax[0].set_ylabel('Licks per 2 min')
+    ax[0].set_ylim([-20, 410])
     
     condhistFig(ax[1], dfc2, 'hist', sol='casein')
     
@@ -468,9 +469,10 @@ if makefigs == True:
     condhistFig(ax[0], dfm1, 'hist')
     fig2c.text(0.55, 0.04, 'Time (minutes)', ha='center')
     ax[0].set_ylabel('Licks per 2 min')
+    ax[0].set_ylim([-20, 410])
     
     condhistFig(ax[1], dfm2, 'hist')
-    
+
     fig2d, ax = plt.subplots(nrows=1, ncols=1, sharex=True, sharey=True, figsize=(3.2, 2.4))
     cond2Dfig(ax, df, 'total')
     plt.yticks([0, 2000, 4000, 6000], ('0', '2', '4', '6'))
@@ -484,7 +486,6 @@ if makefigs == True:
     plt.yticks([0, 5000, 10000, 15000], ('0', '5', '10', '15'))
     ax.set_ylabel('Licks (x1000)')
 
-
 if statson == True:
     solmsk = df.sol == 'c'
     r_df = df[['ratid', 'diet', 'cday', 'total']][solmsk]
@@ -497,18 +498,22 @@ if statson == True:
     ro.r('pr_cas_day12 = t.test(r_df$total[r_df$diet=="lp" & r_df$cday=="1"], r_df$total[r_df$diet=="lp" & r_df$cday=="2"], paired=TRUE)')
     print('LOW PROTEIN rats (licks per CASEIN conditioning) - day 1 vs. day 2')
     print(ro.r('pr_cas_day12'))
+    print('With Sidak correction, p=' + str(sidakcorr(ro.r('pr_cas_day12'), ncomps=4)))
     
     ro.r('nr_cas_day12 = t.test(r_df$total[r_df$diet=="np" & r_df$cday=="1"], r_df$total[r_df$diet=="np" & r_df$cday=="2"], paired=TRUE)')
     print('NORMAL PROTEIN rats (licks per CASEIN conditioning) - day 1 vs. day 2')
     print(ro.r('nr_cas_day12'))
+    print('With Sidak correction, p=' + str(sidakcorr(ro.r('nr_cas_day12'), ncomps=4)))
     
     ro.r('nrpr_cas_DAY1 = t.test(r_df$total[r_df$diet=="lp" & r_df$cday=="1"], r_df$total[r_df$diet=="np" & r_df$cday=="1"], paired=FALSE)')
     print('LOW vs NORMAL PROTEIN rats (licks per CASEIN conditioning) - DAY 1')
     print(ro.r('nrpr_cas_DAY1'))
+    print('With Sidak correction, p=' + str(sidakcorr(ro.r('nrpr_cas_DAY1'), ncomps=4)))
     
     ro.r('nrpr_cas_DAY2 = t.test(r_df$total[r_df$diet=="lp" & r_df$cday=="2"], r_df$total[r_df$diet=="np" & r_df$cday=="2"], paired=FALSE)')
     print('LOW vs NORMAL PROTEIN rats (licks per CASEIN conditioning) - DAY 2')
     print(ro.r('nrpr_cas_DAY2'))
+    print('With Sidak correction, p=' + str(sidakcorr(ro.r('nrpr_cas_DAY2'), ncomps=4)))
     
     # Day 1 vs 2, PR vs NR for CASEIN
     solmsk = df.sol == 'm'
@@ -633,10 +638,12 @@ if statson == True:
     ro.r('np_casvmalt = t.test(r_df$total[r_df$diet=="np" & r_df$sol=="c"], r_df$total[r_df$diet=="np" & r_df$sol=="m"], paired=TRUE)')
     print('Normal protein rats - casein vs. maltodextrin')
     print(ro.r('np_casvmalt'))
+    print('With Sidak correction, p=' + str(sidakcorr(ro.r('np_casvmalt'), ncomps=2)))
     
     ro.r('lp_casvmalt = t.test(r_df$total[r_df$diet=="lp" & r_df$sol=="c"], r_df$total[r_df$diet=="lp" & r_df$sol=="m"], paired=TRUE)')
     print('LOW PROTEIN rats - casein vs. maltodextrin')
     print(ro.r('lp_casvmalt'))
+    print('With Sidak correction, p=' + str(sidakcorr(ro.r('lp_casvmalt'), ncomps=2)))
     
     # Analysis of Licks per burst
     
@@ -646,10 +653,12 @@ if statson == True:
     ro.r('np_casvmalt = t.test(r_df$bMean[r_df$diet=="np" & r_df$sol=="c"], r_df$bMean[r_df$diet=="np" & r_df$sol=="m"], paired=TRUE)')
     print('Normal protein rats (licks per burst) - casein vs. maltodextrin')
     print(ro.r('np_casvmalt'))
+    print('With Sidak correction, p=' + str(sidakcorr(ro.r('np_casvmalt'), ncomps=2)))
     
     ro.r('lp_casvmalt = t.test(r_df$bMean[r_df$diet=="lp" & r_df$sol=="c"], r_df$bMean[r_df$diet=="lp" & r_df$sol=="m"], paired=TRUE)')
     print('LOW PROTEIN rats (licks per burst) - casein vs. maltodextrin')
     print(ro.r('lp_casvmalt'))
+    print('With Sidak correction, p=' + str(sidakcorr(ro.r('lp_casvmalt'), ncomps=2)))
     
     
     print('Number of bursts')
@@ -658,10 +667,12 @@ if statson == True:
     ro.r('np_casvmalt = t.test(r_df$bNum[r_df$diet=="np" & r_df$sol=="c"], r_df$bNum[r_df$diet=="np" & r_df$sol=="m"], paired=TRUE)')
     print('Normal protein rats (burst number) - casein vs. maltodextrin')
     print(ro.r('np_casvmalt'))
+    print('With Sidak correction, p=' + str(sidakcorr(ro.r('np_casvmalt'), ncomps=2)))
     
     ro.r('lp_casvmalt = t.test(r_df$bNum[r_df$diet=="lp" & r_df$sol=="c"], r_df$bNum[r_df$diet=="lp" & r_df$sol=="m"], paired=TRUE)')
     print('LOW PROTEIN rats (burst number) - casein vs. maltodextrin')
     print(ro.r('lp_casvmalt'))
+    print('With Sidak correction, p=' + str(sidakcorr(ro.r('lp_casvmalt'), ncomps=2)))
     
     # Analysis of protein preference
     
@@ -671,7 +682,6 @@ if statson == True:
     ro.r('proteinPref = t.test(nppref[\'pref\'], lppref[\'pref\'], paired=FALSE)')
     print(ro.r('proteinPref'))
     ro.r('proteinPref')
-    print(sidakcorr(ro.r('proteinPref'), ncomps=3))
 
 
 if savefigs == True:
