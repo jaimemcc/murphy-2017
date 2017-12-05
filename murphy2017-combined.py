@@ -6,9 +6,9 @@ Created on Tue Sep  5 10:32:27 2017
 """
 
 # Uncomment these imports for R statistics
-makefigs = True
-savefigs = True
-statson = False
+makefigs = False
+savefigs = False
+statson = True
 
 if statson == True:
     import rpy2.robjects as ro
@@ -287,8 +287,15 @@ def cond2Dfig(ax, df, factor, sol='maltodextrin'):
                  scatteredgecolor = ['xkcd:charcoal'],
                  scatterlinecolor = 'xkcd:charcoal',
                  grouplabel=['Day 1', 'Day 2'],
-                 scattersize = 40,
+                 scattersize = 30,
                  ax=ax)
+
+def sidakcorr(robj, ncomps=3):
+    pval = robj.rx('p.value')
+    print(pval)
+    print(1-pval)
+#    corr_p = 1-((1-pval)^ncomps)   
+    return corr_p
 
 metafile = userhome + '\\Documents\\GitHub\\murphy-2017\\CAS9_metafile.txt'
 metafileData, metafileHeader = jmf.metafilereader(metafile)
@@ -495,6 +502,14 @@ if statson == True:
     print('NORMAL PROTEIN rats (licks per CASEIN conditioning) - day 1 vs. day 2')
     print(ro.r('nr_cas_day12'))
     
+    ro.r('nrpr_cas_DAY1 = t.test(r_df$total[r_df$diet=="lp" & r_df$cday=="1"], r_df$total[r_df$diet=="np" & r_df$cday=="1"], paired=FALSE)')
+    print('LOW vs NORMAL PROTEIN rats (licks per CASEIN conditioning) - DAY 1')
+    print(ro.r('nrpr_cas_DAY1'))
+    
+    ro.r('nrpr_cas_DAY2 = t.test(r_df$total[r_df$diet=="lp" & r_df$cday=="2"], r_df$total[r_df$diet=="np" & r_df$cday=="2"], paired=FALSE)')
+    print('LOW vs NORMAL PROTEIN rats (licks per CASEIN conditioning) - DAY 2')
+    print(ro.r('nrpr_cas_DAY2'))
+    
     # Day 1 vs 2, PR vs NR for CASEIN
     solmsk = df.sol == 'm'
     r_df = df[['ratid', 'diet', 'cday', 'total']][solmsk]
@@ -655,6 +670,9 @@ if statson == True:
     
     ro.r('proteinPref = t.test(nppref[\'pref\'], lppref[\'pref\'], paired=FALSE)')
     print(ro.r('proteinPref'))
+    ro.r('proteinPref')
+    print(sidakcorr(ro.r('proteinPref'), ncomps=3))
+
 
 if savefigs == True:
     savefolder = userhome + '\\Dropbox\Publications in Progress\\Murphy_protein\\Figs\\'
