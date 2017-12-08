@@ -20,15 +20,8 @@ if statson == True:
 import numpy as np
 import scipy.io as sio
 import matplotlib.pyplot as plt
-from scipy.stats import ks_2samp
 
-import JM_general_functions as jmf
 import JM_custom_figs as jmfig
-
-from matplotlib.backends.backend_pdf import PdfPages
-import matplotlib.gridspec as gridspec
-
-#plt.style.use('murphy')
 
 import matplotlib as mpl
 mpl.rcParams['figure.figsize'] = (3.2, 2.4)
@@ -58,9 +51,6 @@ col['lp_malt'] = 'xkcd:light green'
 import pandas as pd
 
 import os
-import timeit
-
-tic = timeit.default_timer()
 
 userhome = os.path.expanduser('~')
 datafolder = userhome + '\\Documents\\GitHub\\murphy-2017\\cas9_medfiles\\'
@@ -102,10 +92,10 @@ class Session(object):
             rats[self.rat].diet = self.hrow['diet']
                     
     def extractlicks(self, substance):
-        licks = jmf.medfilereader(self.medfile,
+        licks = medfilereader(self.medfile,
                                   varsToExtract = sub2var(self, substance),
                                                     remove_var_header = True)
-        lickData = jmf.lickCalc(licks, burstThreshold=0.5, binsize=120)        
+        lickData = lickCalc(licks, burstThreshold=0.5, binsize=120)        
         
         return lickData
 
@@ -141,6 +131,134 @@ class Session(object):
                 rats[self.rat].preference1_cas = self.lickData_cas
                 rats[self.rat].preference1_malt = self.lickData_malt
                             
+def metafilereader(filename):
+    
+    f = open(filename, 'r')
+    f.seek(0)
+    header = f.readlines()[0]
+    f.seek(0)
+    filerows = f.readlines()[1:]
+    
+    tablerows = []
+    
+    for i in filerows:
+        tablerows.append(i.split('\t'))
+        
+    header = header.split('\t')
+    # need to find a way to strip end of line \n from last column - work-around is to add extra dummy column at end of metafile
+    return tablerows, header
+
+def isnumeric(s):
+    try:
+        x = float(s)
+        return x
+    except ValueError:
+        return float('nan')
+
+def medfilereader(filename, varsToExtract = 'all',
+                  sessionToExtract = 1,
+                  verbose = False,
+                  remove_var_header = False):
+    if varsToExtract == 'all':
+        numVarsToExtract = np.arange(0,26)
+    else:
+        numVarsToExtract = [ord(x)-97 for x in varsToExtract]
+    
+    f = open(filename, 'r')
+    f.seek(0)
+    filerows = f.readlines()[8:]
+    datarows = [isnumeric(x) for x in filerows]
+    matches = [i for i,x in enumerate(datarows) if x == 0.3]
+    if sessionToExtract > len(matches):
+        print('Session ' + str(sessionToExtract) + ' does not exist.')
+    if verbose == True:
+        print('There are ' + str(len(matches)) + ' sessions in ' + filename)
+        print('Analyzing session ' + str(sessionToExtract))
+    
+    varstart = matches[sessionToExtract - 1]
+    medvars = [[] for n in range(26)]
+    
+    k = int(varstart + 27)
+    for i in range(26):
+        medvarsN = int(datarows[varstart + i + 1])
+        
+        medvars[i] = datarows[k:k + int(medvarsN)]
+        k = k + medvarsN
+        
+    if remove_var_header == True:
+        varsToReturn = [medvars[i][1:] for i in numVarsToExtract]
+    else:
+        varsToReturn = [medvars[i] for i in numVarsToExtract]
+
+    if np.shape(varsToReturn)[0] == 1:
+        varsToReturn = varsToReturn[0]
+    return varsToReturn
+
+"""
+This function will calculate data for bursts from a train of licks. The threshold
+for bursts and clusters can be set. It returns all data as a dictionary.
+"""
+def lickCalc(licks, offset = [], burstThreshold = 0.25, runThreshold = 10, 
+             binsize=60, histDensity = False):
+    # makes dictionary of data relating to licks and bursts
+    if type(licks) != np.ndarray or type(offset) != np.ndarray:
+        try:
+            licks = np.array(licks)
+            offset = np.array(offset)
+        except:
+            print('Licks and offsets need to be arrays and unable to easily convert.')
+            return
+
+    lickData = {}
+    
+    if len(offset) > 0:
+        lickData['licklength'] = offset - licks
+        lickData['longlicks'] = [x for x in lickData['licklength'] if x > 0.3]
+    else:
+        lickData['licklength'] = []
+        lickData['longlicks'] = []
+
+    lickData['licks'] = np.concatenate([[0], licks])
+    lickData['ilis'] = np.diff(lickData['licks'])
+    lickData['freq'] = 1/np.mean([x for x in lickData['ilis'] if x < burstThreshold])
+    lickData['total'] = len(licks)
+    
+    # Calculates start, end, number of licks and time for each BURST 
+    lickData['bStart'] = [val for i, val in enumerate(lickData['licks']) if (val - lickData['licks'][i-1] > burstThreshold)]  
+    lickData['bInd'] = [i for i, val in enumerate(lickData['licks']) if (val - lickData['licks'][i-1] > burstThreshold)]
+    lickData['bEnd'] = [lickData['licks'][i-1] for i in lickData['bInd'][1:]]
+    lickData['bEnd'].append(lickData['licks'][-1])
+
+    lickData['bLicks'] = np.diff(lickData['bInd'] + [len(lickData['licks'])])    
+    lickData['bTime'] = np.subtract(lickData['bEnd'], lickData['bStart'])
+    lickData['bNum'] = len(lickData['bStart'])
+    if lickData['bNum'] > 0:
+        lickData['bMean'] = np.nanmean(lickData['bLicks'])
+    else:
+        lickData['bMean'] = 0
+    
+    lickData['bILIs'] = [x for x in lickData['ilis'] if x > burstThreshold]
+
+    # Calculates start, end, number of licks and time for each RUN
+    lickData['rStart'] = [val for i, val in enumerate(lickData['licks']) if (val - lickData['licks'][i-1] > runThreshold)]  
+    lickData['rInd'] = [i for i, val in enumerate(lickData['licks']) if (val - lickData['licks'][i-1] > runThreshold)]
+    lickData['rEnd'] = [lickData['licks'][i-1] for i in lickData['rInd'][1:]]
+    lickData['rEnd'].append(lickData['licks'][-1])
+
+    lickData['rLicks'] = np.diff(lickData['rInd'] + [len(lickData['licks'])])    
+    lickData['rTime'] = np.subtract(lickData['rEnd'], lickData['rStart'])
+    lickData['rNum'] = len(lickData['rStart'])
+
+    lickData['rILIs'] = [x for x in lickData['ilis'] if x > runThreshold]
+    try:
+        lickData['hist'] = np.histogram(lickData['licks'][1:], 
+                                    range=(0, 3600), bins=int((3600/binsize)),
+                                          density=histDensity)[0]
+    except TypeError:
+        print('Problem making histograms of lick data')
+        
+    return lickData
+
 def sub2var(session, substance):
     varsOut = []
     if session.bottleA == substance:
@@ -292,7 +410,7 @@ def cond2Dfig(ax, df, factor, sol='maltodextrin'):
 
 
 metafile = userhome + '\\Documents\\GitHub\\murphy-2017\\CAS9_metafile.txt'
-metafileData, metafileHeader = jmf.metafilereader(metafile)
+metafileData, metafileHeader = metafilereader(metafile)
 
 exptsuffix = ''
 includecol = 10
@@ -494,22 +612,18 @@ if statson == True:
     ro.r('pr_cas_day12 = t.test(r_df$total[r_df$diet=="lp" & r_df$cday=="1"], r_df$total[r_df$diet=="lp" & r_df$cday=="2"], paired=TRUE)')
     print('LOW PROTEIN rats (licks per CASEIN conditioning) - day 1 vs. day 2')
     print(ro.r('pr_cas_day12'))
-    print('With Sidak correction, p=' + str(sidakcorr(ro.r('pr_cas_day12'), ncomps=4)))
     
     ro.r('nr_cas_day12 = t.test(r_df$total[r_df$diet=="np" & r_df$cday=="1"], r_df$total[r_df$diet=="np" & r_df$cday=="2"], paired=TRUE)')
     print('NORMAL PROTEIN rats (licks per CASEIN conditioning) - day 1 vs. day 2')
     print(ro.r('nr_cas_day12'))
-    print('With Sidak correction, p=' + str(sidakcorr(ro.r('nr_cas_day12'), ncomps=4)))
     
     ro.r('nrpr_cas_DAY1 = t.test(r_df$total[r_df$diet=="lp" & r_df$cday=="1"], r_df$total[r_df$diet=="np" & r_df$cday=="1"], paired=FALSE)')
     print('LOW vs NORMAL PROTEIN rats (licks per CASEIN conditioning) - DAY 1')
     print(ro.r('nrpr_cas_DAY1'))
-    print('With Sidak correction, p=' + str(sidakcorr(ro.r('nrpr_cas_DAY1'), ncomps=4)))
     
     ro.r('nrpr_cas_DAY2 = t.test(r_df$total[r_df$diet=="lp" & r_df$cday=="2"], r_df$total[r_df$diet=="np" & r_df$cday=="2"], paired=FALSE)')
     print('LOW vs NORMAL PROTEIN rats (licks per CASEIN conditioning) - DAY 2')
     print(ro.r('nrpr_cas_DAY2'))
-    print('With Sidak correction, p=' + str(sidakcorr(ro.r('nrpr_cas_DAY2'), ncomps=4)))
     
     # Day 1 vs 2, PR vs NR for CASEIN
     solmsk = df.sol == 'm'
@@ -651,12 +765,10 @@ if statson == True:
     ro.r('np_casvmalt = t.test(r_df$total[r_df$diet=="np" & r_df$sol=="c"], r_df$total[r_df$diet=="np" & r_df$sol=="m"], paired=TRUE)')
     print('Normal protein rats - casein vs. maltodextrin')
     print(ro.r('np_casvmalt'))
-    print('With Sidak correction, p=' + str(sidakcorr(ro.r('np_casvmalt'), ncomps=2)))
     
     ro.r('lp_casvmalt = t.test(r_df$total[r_df$diet=="lp" & r_df$sol=="c"], r_df$total[r_df$diet=="lp" & r_df$sol=="m"], paired=TRUE)')
     print('LOW PROTEIN rats - casein vs. maltodextrin')
     print(ro.r('lp_casvmalt'))
-    print('With Sidak correction, p=' + str(sidakcorr(ro.r('lp_casvmalt'), ncomps=2)))
     
     # Analysis of Licks per burst
     
@@ -666,26 +778,21 @@ if statson == True:
     ro.r('np_casvmalt = t.test(r_df$bMean[r_df$diet=="np" & r_df$sol=="c"], r_df$bMean[r_df$diet=="np" & r_df$sol=="m"], paired=TRUE)')
     print('Normal protein rats (licks per burst) - casein vs. maltodextrin')
     print(ro.r('np_casvmalt'))
-    print('With Sidak correction, p=' + str(sidakcorr(ro.r('np_casvmalt'), ncomps=2)))
     
     ro.r('lp_casvmalt = t.test(r_df$bMean[r_df$diet=="lp" & r_df$sol=="c"], r_df$bMean[r_df$diet=="lp" & r_df$sol=="m"], paired=TRUE)')
     print('LOW PROTEIN rats (licks per burst) - casein vs. maltodextrin')
     print(ro.r('lp_casvmalt'))
-    print('With Sidak correction, p=' + str(sidakcorr(ro.r('lp_casvmalt'), ncomps=2)))
-    
-    
+        
     print('Number of bursts')
     print(ro.r('summary(burstNum)'))
     
     ro.r('np_casvmalt = t.test(r_df$bNum[r_df$diet=="np" & r_df$sol=="c"], r_df$bNum[r_df$diet=="np" & r_df$sol=="m"], paired=TRUE)')
     print('Normal protein rats (burst number) - casein vs. maltodextrin')
     print(ro.r('np_casvmalt'))
-    print('With Sidak correction, p=' + str(sidakcorr(ro.r('np_casvmalt'), ncomps=2)))
     
     ro.r('lp_casvmalt = t.test(r_df$bNum[r_df$diet=="lp" & r_df$sol=="c"], r_df$bNum[r_df$diet=="lp" & r_df$sol=="m"], paired=TRUE)')
     print('LOW PROTEIN rats (burst number) - casein vs. maltodextrin')
     print(ro.r('lp_casvmalt'))
-    print('With Sidak correction, p=' + str(sidakcorr(ro.r('lp_casvmalt'), ncomps=2)))
     
     # Analysis of protein preference
     
@@ -698,7 +805,7 @@ if statson == True:
 
 
 if savefigs == True:
-    savefolder = userhome + '\\Dropbox\Publications in Progress\\Murphy_protein\\Figs\\'
+    savefolder = userhome + '\\Desktop\\Temp Figs\\'
     
     fig1a.savefig(savefolder + '01a_bodyweight.eps')
     fig1b.savefig(savefolder + '01b_foodintake.eps')
