@@ -6,9 +6,9 @@ Created on Tue Sep  5 10:32:27 2017
 """
 
 # Uncomment these imports for R statistics
-makefigs = False
-savefigs = False
-statson = False
+makefigs = True
+savefigs = True
+statson = True
 
 if statson == True:
     import rpy2.robjects as ro
@@ -290,10 +290,6 @@ def cond2Dfig(ax, df, factor, sol='maltodextrin'):
                  scattersize = 30,
                  ax=ax)
 
-def sidakcorr(robj, ncomps=3):
-    pval = (list(robj.rx('p.value'))[0])[0]
-    corr_p = 1-((1-pval)**ncomps)   
-    return corr_p
 
 metafile = userhome + '\\Documents\\GitHub\\murphy-2017\\CAS9_metafile.txt'
 metafileData, metafileHeader = jmf.metafilereader(metafile)
