@@ -527,8 +527,8 @@ def prefhistFig(ax1, ax2, df, factor):
     ax1.set_xticks([0,10,20,30])
     ax1.set_xticklabels(['0', '20', '40', '60'])
     
-    shadedError(ax2, df[factor][casmsk & ~dietmsk], linecolor='xkcd:kelly green')
-    ax2 = shadedError(ax2, df[factor][~casmsk & ~dietmsk], linecolor='xkcd:light green')
+    shadedError(ax2, df[factor][casmsk & ~dietmsk], linecolor=col['lp_cas'])
+    ax2 = shadedError(ax2, df[factor][~casmsk & ~dietmsk], linecolor=col['lp_malt'])
     ax2.set_xticks([0,10,20,30])
     ax2.set_xticklabels(['0', '20', '40', '60'])
     
@@ -572,8 +572,8 @@ def casVmaltFig(ax, df):
     
     lpdata = [x for i,x in enumerate(xydataAll) if not dietmsk[i]]
     for x in lpdata:
-        ax.plot(x[0], x[1], c='xkcd:light green', alpha=0.2, linewidth=0.5)
-        ax.scatter(x[0][-1], x[1][-1], color='none', edgecolors='xkcd:kelly green')
+        ax.plot(x[0], x[1], c=col['lp_malt'], alpha=0.2, linewidth=0.5)
+        ax.scatter(x[0][-1], x[1][-1], color='none', edgecolors=col['lp_cas'])
         
     max_x = np.max([ax.get_xlim(), ax.get_ylim()])
     ax.set_xlim([-300, max_x])
@@ -585,10 +585,10 @@ def casVmaltFig(ax, df):
 def condhistFig(ax, df, factor, sol='maltodextrin'):
     if sol == 'casein':
         NRcolor = 'black'
-        PRcolor = 'xkcd:kelly green'
+        PRcolor = col['lp_cas']
     else:
         NRcolor = 'xkcd:bluish grey'
-        PRcolor = 'xkcd:light green'
+        PRcolor = col['lp_malt']
         
     dietmsk = df.diet == 'np'
 
@@ -692,7 +692,7 @@ if makefigs == True:
     fig1a = plt.figure(figsize=(3.2,2.4))
     ax = plt.subplot(1,1,1)
     np_mean.plot(yerr=np_sem, color='xkcd:charcoal', marker='o', markerfacecolor='white')
-    lp_mean.plot(yerr=lp_sem, color='xkcd:kelly green', marker='o', markerfacecolor='white')
+    lp_mean.plot(yerr=lp_sem, color=col['lp_cas'], marker='o', markerfacecolor='white')
     ax.set_ylim([400, 550])
     ax.set_xlim([-1, 17])
     plt.xticks([1,6,11,16], ('0', '5', '10', '15'))
@@ -717,7 +717,7 @@ if makefigs == True:
     ax = plt.subplot(1,1,1)
     barscatter(fi, barfacecoloroption='individual',
                      barwidth = 0.8,
-                     barfacecolor = ['xkcd:silver', 'xkcd:kelly green'],
+                     barfacecolor = [col['np_cas'], col['lp_cas']],
                      scatteredgecolor = ['xkcd:charcoal'],
                      scattersize = 40,
                      ylabel = 'Average food intake (g/day)',
@@ -732,7 +732,7 @@ if makefigs == True:
     ax = plt.subplot(1,1,1)
     barscatter(fi, barfacecoloroption='individual',
                      barwidth = 0.8,
-                     barfacecolor = ['xkcd:silver', 'xkcd:kelly green'],
+                     barfacecolor = [col['np_cas'], col['lp_cas']],
                      scatteredgecolor = ['xkcd:charcoal'],
                      scattersize = 40,
                      grouplabel=['NR', 'PR'],
@@ -953,7 +953,7 @@ if makefigs == True:
     mpl.rcParams['figure.subplot.left'] = 0.25
     fig3d = plt.figure(figsize=(1.8, 2.4))
     ax = plt.subplot(1,1,1)
-    barscatter(a, barfacecoloroption = 'between', barfacecolor = ['xkcd:silver', 'xkcd:kelly green'],
+    barscatter(a, barfacecoloroption = 'between', barfacecolor = [col['np_cas'], col['lp_cas']],
                          scatteredgecolor = ['black'],
                          scatterlinecolor = 'black',
                          grouplabel=['NR', 'PR'],
