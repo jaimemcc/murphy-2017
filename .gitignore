@@ -24,3 +24,7 @@
 *.Subject 18
 *.Subject 21
 *.Subject 24
+*.ini
+
+*.spyproject
+*.ini
