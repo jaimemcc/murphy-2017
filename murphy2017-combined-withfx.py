@@ -2,10 +2,10 @@
 """
 Created on Tue Sep  5 10:32:27 2017
 
-@author: LocalAdmin1
+@author: James McCutcheon
 """
 
-# Uncomment these imports for R statistics
+# Change these variables to turn stats or figures on/off
 makefigs = True
 savefigs = True
 statson = True
@@ -23,6 +23,8 @@ import matplotlib.pyplot as plt
 from itertools import chain
 import pandas as pd
 import os
+import tkinter as tk
+from tkinter import filedialog
 
 import matplotlib as mpl
 mpl.rcParams['figure.figsize'] = (3.2, 2.4)
@@ -51,7 +53,7 @@ col['lp_malt'] = 'xkcd:light green'
 
 userhome = os.path.expanduser('~')
 datafolder = userhome + '\\Documents\\GitHub\\murphy-2017\\cas9_medfiles\\'
-
+  
 class Rat(object):
     
     nRats = 0
@@ -353,8 +355,7 @@ def barscatter(data, transpose = False,
             barMeans[i] = np.mean(data[i])
             items[i] = len(data[i])
     
-    # Calculate x values for bars and scatters
-    
+    # Calculate x values for bars and scatters    
     xvals = np.zeros((np.shape(data)))
     barallocation = groupwidth / barspergroup
     k = (groupwidth/2) - (barallocation/2)
@@ -368,8 +369,7 @@ def barscatter(data, transpose = False,
     else:
         xvals = groupx
     
-    # Set colors for bars and scatters
-     
+    # Set colors for bars and scatters     
     barfacecolorArray = setcolors(barfacecoloroption, barfacecolor, barspergroup, nGroups, data)
     baredgecolorArray = setcolors(baredgecoloroption, baredgecolor, barspergroup, nGroups, data)
      
@@ -390,11 +390,6 @@ def barscatter(data, transpose = False,
         barlist.append(ax.bar(x, y, barwidth,
                          facecolor = bfc, edgecolor = bec,
                          zorder=-1))
-    
-    # Uncomment these lines to show method for changing bar colors outside of
-    # function using barlist properties
-    #for i in barlist[2].get_children():
-    #    i.set_color('r')
     
     # Make scatters
     sclist = []
@@ -578,7 +573,6 @@ def casVmaltFig(ax, df):
     max_x = np.max([ax.get_xlim(), ax.get_ylim()])
     ax.set_xlim([-300, max_x])
     ax.set_ylim([-300, max_x])
-
     
     return xydataAll
 
@@ -626,7 +620,6 @@ def cond2Dfig(ax, df, factor, sol='maltodextrin'):
                  scattersize = 30,
                  ax=ax)
 
-
 metafile = userhome + '\\Documents\\GitHub\\murphy-2017\\CAS9_metafile.txt'
 metafileData, metafileHeader = metafilereader(metafile)
 
@@ -662,11 +655,9 @@ except NameError:
 ## Body weight and food intake
 
 bwmetafile = userhome + '\\Documents\\GitHub\\murphy-2017\\CAS9bw_metafile.csv'
-
 data = pd.read_csv(bwmetafile, index_col=['rat', 'diet'])
 
-# Statistics
-
+# Statistics on body weight
 if statson == True:
     data = data[:].stack()
     data = data.to_frame()
@@ -677,7 +668,6 @@ if statson == True:
     ro.r('bodyweight = aov(formula = licks ~ day * diet + Error(rat / day), data = r_data)')
     
     print(ro.r('summary(bodyweight)'))
-
 
 data = pd.read_csv(bwmetafile, index_col=['rat'])
 
@@ -740,7 +730,6 @@ if makefigs == True:
     plt.yticks([0, 10, 20, 30])
     ax.set_xlim([0.25,2.75])
     ax.set_ylim([0, 35])
-
 
 mpl.rcParams['figure.subplot.left'] = 0.15
 
@@ -827,14 +816,6 @@ if statson == True:
     print('Casein during conditioning')
     print(ro.r('summary(casein_cond)'))
     
-    ro.r('pr_cas_day12 = t.test(r_df$total[r_df$diet=="lp" & r_df$cday=="1"], r_df$total[r_df$diet=="lp" & r_df$cday=="2"], paired=TRUE)')
-    print('LOW PROTEIN rats (licks per CASEIN conditioning) - day 1 vs. day 2')
-    print(ro.r('pr_cas_day12'))
-    
-    ro.r('nr_cas_day12 = t.test(r_df$total[r_df$diet=="np" & r_df$cday=="1"], r_df$total[r_df$diet=="np" & r_df$cday=="2"], paired=TRUE)')
-    print('NORMAL PROTEIN rats (licks per CASEIN conditioning) - day 1 vs. day 2')
-    print(ro.r('nr_cas_day12'))
-    
     ro.r('nrpr_cas_DAY1 = t.test(r_df$total[r_df$diet=="lp" & r_df$cday=="1"], r_df$total[r_df$diet=="np" & r_df$cday=="1"], paired=FALSE)')
     print('LOW vs NORMAL PROTEIN rats (licks per CASEIN conditioning) - DAY 1')
     print(ro.r('nrpr_cas_DAY1'))
@@ -843,7 +824,6 @@ if statson == True:
     print('LOW vs NORMAL PROTEIN rats (licks per CASEIN conditioning) - DAY 2')
     print(ro.r('nrpr_cas_DAY2'))
     
-    # Day 1 vs 2, PR vs NR for CASEIN
     solmsk = df.sol == 'm'
     r_df = df[['ratid', 'diet', 'cday', 'total']][solmsk]
     ro.globalenv['r_df'] = r_df
@@ -852,21 +832,13 @@ if statson == True:
     print('Maltodextrin during conditioning')
     print(ro.r('summary(malto_cond)'))
     
-    #ro.r('pr_malt_day12 = t.test(r_df$total[r_df$diet=="lp" & r_df$cday=="1"], r_df$total[r_df$diet=="lp" & r_df$cday=="2"], paired=TRUE)')
-    #print('LOW PROTEIN rats (licks per MALTO conditioning) - day 1 vs. day 2')
-    #print(ro.r('pr_malt_day12'))
-    #
-    #ro.r('nr_malt_day12 = t.test(r_df$total[r_df$diet=="np" & r_df$cday=="1"], r_df$total[r_df$diet=="np" & r_df$cday=="2"], paired=TRUE)')
-    #print('NORMAL PROTEIN rats (licks per MALTO conditioning) - day 1 vs. day 2')
-    #print(ro.r('nr_malt_day12'))
     r_df = df2[['ratid', 'sol', 'diet', 'total']]
     ro.globalenv['r_df'] = r_df
     ro.r('condlicks = aov(formula = total ~ sol * diet + Error(ratid / sol), data = r_df)')
-    print('Licks during conditioning')
+    print('Total licks during conditioning')
     print(ro.r('summary(condlicks)'))
 
 # Analysis of Preference Day 1
-
 dfc = pd.DataFrame([(rats[x].preference1_cas) for x in rats])
 dfm = pd.DataFrame([(rats[x].preference1_malt) for x in rats])
 
@@ -889,15 +861,6 @@ prefdaytotal = (df.total[:24]+df.total[24:])
 df4.insert(3,'total',prefdaytotal)
 
 df5 = pd.concat([df3, df4])
-
-#if statson == True:
-#daymsk = df.day == 'c'
-#r_df = df5[['ratid', 'diet', 'day', 'total']][solmsk]
-#ro.globalenv['r_df'] = r_df
-#    
-#    ro.r('casein_cond = aov(formula = total ~ cday * diet + Error(ratid / cday), data = r_df)')
-#    print('Casein during conditioning')
-#    print(ro.r('summary(casein_cond)'))
 
 # Figure 3A - Licks over time, histogram
 if makefigs == True:
@@ -931,7 +894,6 @@ if makefigs == True:
 # Analysis of palatability
 
 # Figure 4A - licks per burst
-
     fig4a = plt.figure(figsize=(3.2, 2.4))
     ax = plt.subplot(1,1,1)
     nplp2Dfig(df, 'bMean', ax)
@@ -945,7 +907,6 @@ if makefigs == True:
     ax.set_yticks([0, 50, 100, 150, 200])
 
 # Figure 3D - protein preference
-
 dietmsk = df2.diet == 'np'
 a = data2obj1D([df2['pref'][dietmsk], df2['pref'][~dietmsk]])
 
@@ -968,7 +929,7 @@ if makefigs == True:
     
     mpl.rcParams['figure.subplot.left'] = 0.15
 
-## Statistics with R
+## Statistics on preference test day
 if statson == True:
     r_df = df[['ratid', 'sol', 'diet', 'total', 'bMean', 'bNum']]
     ro.globalenv['r_df'] = r_df
@@ -989,7 +950,6 @@ if statson == True:
     print(ro.r('lp_casvmalt'))
     
     # Analysis of Licks per burst
-    
     print('Licks per burst')
     print(ro.r('summary(burstMean)'))
     
@@ -1012,8 +972,7 @@ if statson == True:
     print('LOW PROTEIN rats (burst number) - casein vs. maltodextrin')
     print(ro.r('lp_casvmalt'))
     
-    # Analysis of protein preference
-    
+    # Analysis of protein preference ratio
     ro.globalenv['nppref'] = df2[df2['diet'] == 'np']
     ro.globalenv['lppref'] = df2[df2['diet'] != 'np']
     
