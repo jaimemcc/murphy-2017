@@ -980,7 +980,6 @@ if statson == True:
     print(ro.r('proteinPref'))
     ro.r('proteinPref')
 
-
 if savefigs == True:
     savefolder = userhome + '\\Desktop\\Temp Figs\\'
     
@@ -1001,4 +1000,3 @@ if savefigs == True:
     
     fig4a.savefig(savefolder + '04a_prefburstmean.eps')
     fig4b.savefig(savefolder + '04b_prefburstnum.eps')
-
