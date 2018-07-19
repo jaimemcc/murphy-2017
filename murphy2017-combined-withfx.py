@@ -6,9 +6,9 @@ Created on Tue Sep  5 10:32:27 2017
 """
 
 # Change these variables to turn stats or figures on/off
-makefigs = True
-savefigs = True
-statson = True
+makefigs = False
+savefigs = False
+statson = False
 
 if statson == True:
     import rpy2.robjects as ro
@@ -318,12 +318,26 @@ def barscatter(data, transpose = False,
                 xlabel = 'none',
                 grouplabel = 'auto',
                 itemlabel = 'none',
+                barlabels = [],
+                barlabeloffset=0.1,
+                grouplabeloffset=0.2,
                 yaxisparams = 'auto',
                 show_legend = 'none',
                 legendloc='upper right',
                 ax=[]):
-#
-#    if type(data) == float
+
+    if type(data) != np.ndarray or data.dtype != np.object:
+        dims = np.shape(data)
+        if len(dims) == 2:
+            data = data2obj1D(data)
+
+        elif len(dims) == 3:
+            data = data2obj2D(data)
+              
+        else:
+            print('Cannot interpret data shape. Should be 2 or 3 dimensional array. Exiting function.')
+            return
+
     # Check if transpose = True
     if transpose == True:
         data = np.transpose(data)
@@ -348,14 +362,14 @@ def barscatter(data, transpose = False,
         
     else:
         grouped = False
-        paired = False
         barspergroup = 1
         
         for i in range(np.shape(data)[0]):
             barMeans[i] = np.mean(data[i])
             items[i] = len(data[i])
     
-    # Calculate x values for bars and scatters    
+    # Calculate x values for bars and scatters
+    
     xvals = np.zeros((np.shape(data)))
     barallocation = groupwidth / barspergroup
     k = (groupwidth/2) - (barallocation/2)
@@ -369,7 +383,8 @@ def barscatter(data, transpose = False,
     else:
         xvals = groupx
     
-    # Set colors for bars and scatters     
+    # Set colors for bars and scatters
+     
     barfacecolorArray = setcolors(barfacecoloroption, barfacecolor, barspergroup, nGroups, data)
     baredgecolorArray = setcolors(baredgecoloroption, baredgecolor, barspergroup, nGroups, data)
      
@@ -391,6 +406,11 @@ def barscatter(data, transpose = False,
                          facecolor = bfc, edgecolor = bec,
                          zorder=-1))
     
+    # Uncomment these lines to show method for changing bar colors outside of
+    # function using barlist properties
+    #for i in barlist[2].get_children():
+    #    i.set_color('r')
+    
     # Make scatters
     sclist = []
     if paired == False:
@@ -400,15 +420,25 @@ def barscatter(data, transpose = False,
                 sclist.append(ax.scatter(x, y, s = scattersize,
                          c = scf,
                          edgecolors = sce,
-                         zorder=1))
-    else:
+                         zorder=20))
+    elif grouped == True:
         for x, Yarray, scf, sce in zip(xvals, data, scfacecolorArray, scedgecolorArray):
             for y in np.transpose(Yarray.tolist()):
                 sclist.append(ax.plot(x, y, '-o', markersize = scattersize/10,
                          color = scatterlinecolor,
                          linewidth=linewidth,
                          markerfacecolor = scf,
-                         markeredgecolor = sce))
+                         markeredgecolor = sce,
+                         zorder=20))
+    elif grouped == False:
+        for n,_ in enumerate(data[0]):
+            y = [y[n-1] for y in data]
+            sclist.append(ax.plot(xvals, y, '-o', markersize = scattersize/10,
+                         color = 'grey',
+                         linewidth=linewidth,
+                         markerfacecolor = scfacecolorArray[0],
+                         markeredgecolor = scedgecolorArray[0],
+                         zorder=20))
     
     # Label axes
     if ylabel != 'none':
@@ -423,16 +453,32 @@ def barscatter(data, transpose = False,
         plt.yticks(yaxisparams[1])
        
     # X ticks
-    plt.tick_params(
+    ax.tick_params(
         axis='x',          # changes apply to the x-axis
         which='both',      # both major and minor ticks are affected
         bottom='off',      # ticks along the bottom edge are off
         top='off') # labels along the bottom edge are off
-    
+
     if grouplabel == 'auto':
         plt.tick_params(labelbottom='off')
     else:
-        plt.xticks(range(1,nGroups+1), grouplabel)
+        if len(barlabels) > 0:
+            plt.tick_params(labelbottom='off')
+            yrange = ax.get_ylim()[1] - ax.get_ylim()[0]
+            offset = ax.get_ylim()[0] - yrange*grouplabeloffset
+            for idx, label in enumerate(grouplabel):
+                ax.text(idx+1, offset, label, va='top', ha='center')
+        else:
+            plt.xticks(range(1,nGroups+1), grouplabel)
+        
+    if len(barlabels) > 0:
+        if len(barlabels) != len(barx):
+            print('Wrong number of bar labels for number of bars!')
+        else:
+            yrange = ax.get_ylim()[1] - ax.get_ylim()[0]
+            offset = ax.get_ylim()[0] - yrange*barlabeloffset
+            for x, label in zip(barx, barlabels):
+                ax.text(x, offset, label, va='top', ha='center')
     
     # Hide the right and top spines and set bottom to zero
     ax.spines['right'].set_visible(False)
