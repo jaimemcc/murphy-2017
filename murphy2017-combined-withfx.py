@@ -6,7 +6,7 @@ Created on Tue Sep  5 10:32:27 2017
 """
 
 # Change these variables to turn stats or figures on/off
-makefigs = False
+makefigs = True
 savefigs = False
 statson = False
 
@@ -31,8 +31,8 @@ mpl.rcParams['figure.figsize'] = (3.2, 2.4)
 mpl.rcParams['figure.dpi'] = 100
 
 mpl.rcParams['font.size'] = 8.0
-mpl.rcParams['axes.labelsize'] = 'medium'
-mpl.rcParams['ytick.labelsize'] = 'small'
+mpl.rcParams['axes.labelsize'] = 'large'
+mpl.rcParams['ytick.labelsize'] = 'medium'
 
 mpl.rcParams['figure.subplot.left'] = 0.15
 mpl.rcParams['figure.subplot.bottom'] = 0.20
@@ -556,7 +556,10 @@ def nplp2Dfig(df, key, ax):
                  scatteredgecolor = ['xkcd:charcoal'],
                  scatterlinecolor = 'xkcd:charcoal',
                  grouplabel=['NR', 'PR'],
-                 scattersize = 60,
+                 grouplabeloffset=0.14,
+                 barlabels=['Cas', 'Malt', 'Cas', 'Malt'],
+                 barlabeloffset=0.04,
+                 scattersize = 80,
                  ax=ax)
 
 def prefhistFig(ax1, ax2, df, factor):
@@ -668,7 +671,7 @@ def cond2Dfig(ax, df, factor, sol='maltodextrin'):
 
 metafile = userhome + '\\Documents\\GitHub\\murphy-2017\\CAS9_metafile.txt'
 metafileData, metafileHeader = metafilereader(metafile)
-
+savefolder = 'C:\\Users\\jaimeHP\\Dropbox\\AbstractsAndTalks\\180718_SSIB_Florida\\figs\\'
 exptsuffix = ''
 includecol = 10
 
@@ -813,76 +816,46 @@ df3 = df[['ratid', 'diet', 'day', 'total']]
 ### Need to append preference data to this df so that I can compare different
 ### amounts of licks
 
-if makefigs == True:
-    
-    mpl.rcParams['figure.subplot.wspace'] = 0.1
-    mpl.rcParams['figure.subplot.left'] = 0.15
-    fig2a, ax = plt.subplots(nrows=1, ncols=2, sharex=True, sharey=True, figsize=(3.2, 2.4))
-    
-    condhistFig(ax[0], dfc1, 'hist', sol='casein')
-    fig2a.text(0.55, 0.04, 'Time (minutes)', ha='center')
-    ax[0].set_ylabel('Licks per 2 min')
-    ax[0].set_ylim([-20, 410])
-    
-    condhistFig(ax[1], dfc2, 'hist', sol='casein')
-    
-    fig2b, ax = plt.subplots(nrows=1, ncols=1, sharex=True, sharey=True, figsize=(3.2, 2.4))
-    cond2Dfig(ax, df, 'total', sol='casein')    
-    plt.yticks([0, 2000, 4000, 6000], ('0', '2', '4', '6'))
-    ax.set_ylim([0, 7800])
-    ax.set_ylabel('Licks (x1000)')
-    
-    fig2c, ax = plt.subplots(nrows=1, ncols=2, sharex=True, sharey=True, figsize=(3.2, 2.4))
-    condhistFig(ax[0], dfm1, 'hist')
-    fig2c.text(0.55, 0.04, 'Time (minutes)', ha='center')
-    ax[0].set_ylabel('Licks per 2 min')
-    ax[0].set_ylim([-20, 410])
-    
-    condhistFig(ax[1], dfm2, 'hist')
+#if makefigs == True:
+#    
+#    mpl.rcParams['figure.subplot.wspace'] = 0.1
+#    mpl.rcParams['figure.subplot.left'] = 0.15
+#    fig2a, ax = plt.subplots(nrows=1, ncols=2, sharex=True, sharey=True, figsize=(3.2, 2.4))
+#    
+#    condhistFig(ax[0], dfc1, 'hist', sol='casein')
+#    fig2a.text(0.55, 0.04, 'Time (minutes)', ha='center')
+#    ax[0].set_ylabel('Licks per 2 min')
+#    ax[0].set_ylim([-20, 410])
+#    
+#    condhistFig(ax[1], dfc2, 'hist', sol='casein')
+#    
+#    fig2b, ax = plt.subplots(nrows=1, ncols=1, sharex=True, sharey=True, figsize=(3.2, 2.4))
+#    cond2Dfig(ax, df, 'total', sol='casein')    
+#    plt.yticks([0, 2000, 4000, 6000], ('0', '2', '4', '6'))
+#    ax.set_ylim([0, 7800])
+#    ax.set_ylabel('Licks (x1000)')
+#    
+#    fig2c, ax = plt.subplots(nrows=1, ncols=2, sharex=True, sharey=True, figsize=(3.2, 2.4))
+#    condhistFig(ax[0], dfm1, 'hist')
+#    fig2c.text(0.55, 0.04, 'Time (minutes)', ha='center')
+#    ax[0].set_ylabel('Licks per 2 min')
+#    ax[0].set_ylim([-20, 410])
+#    
+#    condhistFig(ax[1], dfm2, 'hist')
+#
+#    fig2d, ax = plt.subplots(nrows=1, ncols=1, sharex=True, sharey=True, figsize=(3.2, 2.4))
+#    cond2Dfig(ax, df, 'total')
+#    plt.yticks([0, 2000, 4000, 6000], ('0', '2', '4', '6'))
+#    ax.set_ylim([0, 7800])
+#    ax.set_ylabel('Licks (x1000)')
+#
+## Figure of total licks during conditioning
+#    fig2e = plt.figure(figsize=(3.2, 2.4))
+#    ax = plt.subplot(1,1,1)
+#    nplp2Dfig(df2, 'total', ax=ax)
+#    plt.yticks([0, 5000, 10000, 15000], ('0', '5', '10', '15'))
+#    ax.set_ylabel('Licks (x1000)')
 
-    fig2d, ax = plt.subplots(nrows=1, ncols=1, sharex=True, sharey=True, figsize=(3.2, 2.4))
-    cond2Dfig(ax, df, 'total')
-    plt.yticks([0, 2000, 4000, 6000], ('0', '2', '4', '6'))
-    ax.set_ylim([0, 7800])
-    ax.set_ylabel('Licks (x1000)')
-
-# Figure of total licks during conditioning
-    fig2e = plt.figure(figsize=(3.2, 2.4))
-    ax = plt.subplot(1,1,1)
-    nplp2Dfig(df2, 'total', ax=ax)
-    plt.yticks([0, 5000, 10000, 15000], ('0', '5', '10', '15'))
-    ax.set_ylabel('Licks (x1000)')
-
-if statson == True:
-    solmsk = df.sol == 'c'
-    r_df = df[['ratid', 'diet', 'cday', 'total']][solmsk]
-    ro.globalenv['r_df'] = r_df
-    
-    ro.r('casein_cond = aov(formula = total ~ cday * diet + Error(ratid / cday), data = r_df)')
-    print('Casein during conditioning')
-    print(ro.r('summary(casein_cond)'))
-    
-    ro.r('nrpr_cas_DAY1 = t.test(r_df$total[r_df$diet=="lp" & r_df$cday=="1"], r_df$total[r_df$diet=="np" & r_df$cday=="1"], paired=FALSE)')
-    print('LOW vs NORMAL PROTEIN rats (licks per CASEIN conditioning) - DAY 1')
-    print(ro.r('nrpr_cas_DAY1'))
-    
-    ro.r('nrpr_cas_DAY2 = t.test(r_df$total[r_df$diet=="lp" & r_df$cday=="2"], r_df$total[r_df$diet=="np" & r_df$cday=="2"], paired=FALSE)')
-    print('LOW vs NORMAL PROTEIN rats (licks per CASEIN conditioning) - DAY 2')
-    print(ro.r('nrpr_cas_DAY2'))
-    
-    solmsk = df.sol == 'm'
-    r_df = df[['ratid', 'diet', 'cday', 'total']][solmsk]
-    ro.globalenv['r_df'] = r_df
-    
-    ro.r('malto_cond = aov(formula = total ~ cday * diet + Error(ratid / cday), data = r_df)')
-    print('Maltodextrin during conditioning')
-    print(ro.r('summary(malto_cond)'))
-    
-    r_df = df2[['ratid', 'sol', 'diet', 'total']]
-    ro.globalenv['r_df'] = r_df
-    ro.r('condlicks = aov(formula = total ~ sol * diet + Error(ratid / sol), data = r_df)')
-    print('Total licks during conditioning')
-    print(ro.r('summary(condlicks)'))
 
 # Analysis of Preference Day 1
 dfc = pd.DataFrame([(rats[x].preference1_cas) for x in rats])
@@ -909,140 +882,56 @@ df4.insert(3,'total',prefdaytotal)
 df5 = pd.concat([df3, df4])
 
 # Figure 3A - Licks over time, histogram
-if makefigs == True:
-    mpl.rcParams['figure.subplot.wspace'] = 0.1
-    mpl.rcParams['figure.subplot.left'] = 0.15
-    fig3a, ax = plt.subplots(nrows=1, ncols=2, sharex=True, sharey=True, figsize=(3.2, 2.4))
-    
-    prefhistFig(ax[0], ax[1], df, 'hist')
-    fig3a.text(0.55, 0.04, 'Time (min)', ha='center')
-    ax[0].set_ylabel('Licks per 2 min')
 
-# Figure 3B - casein licks vs maltodextrin licks
-    mpl.rcParams['figure.subplot.left'] = 0.25
-    fig3b = plt.figure(figsize=(2.4, 2.4))
-    ax = plt.subplot(1,1,1)                
-    casVmaltFig(ax, df)
-    ax.set_xlabel('Licks for casein')
-    ax.set_ylabel('Licks for maltodextrin')
-    plt.yticks([0, 2000, 4000, 6000])
-       
-    mpl.rcParams['figure.subplot.left'] = 0.15
+mpl.rcParams['figure.subplot.wspace'] = 0.1
+mpl.rcParams['figure.subplot.left'] = 0.15
+fig3a, ax = plt.subplots(nrows=1, ncols=2, sharex=True, sharey=True, figsize=(3.2, 2.4))
+
+prefhistFig(ax[0], ax[1], df, 'hist')
+fig3a.text(0.55, 0.04, 'Time (min)', ha='center')
+ax[0].set_ylabel('Licks per 2 min')
+fig3a.savefig(savefolder + 'murphy_hist.eps')
+
 
 # Figure 3C - casein and malt preference (licks)
 # Analysis of licks
-    fig3c = plt.figure(figsize=(3.2, 2.4))
-    ax = plt.subplot(1,1,1) 
-    nplp2Dfig(df, 'total', ax)
-    ax.set_ylabel('Licks (x1000)')
-    plt.yticks([0, 2000, 4000, 6000], ('0', '2', '4', '6'))
+fig3c = plt.figure(figsize=(3.2, 2.4))
+ax = plt.subplot(1,1,1) 
+nplp2Dfig(df, 'total', ax)
+ax.set_ylabel('Licks (x1000)')
+ax.set_ylim([-600, 6200])
+plt.yticks([0, 2000, 4000, 6000], ('0', '2', '4', '6'))
+fig3c.savefig(savefolder + 'murphy_pref.eps')
 
 # Analysis of palatability
 
 # Figure 4A - licks per burst
-    fig4a = plt.figure(figsize=(3.2, 2.4))
-    ax = plt.subplot(1,1,1)
-    nplp2Dfig(df, 'bMean', ax)
-    ax.set_ylabel('Average licks per cluster')
-    ax.set_yticks([0, 50, 100, 150])
-    
-    fig4b = plt.figure(figsize=(3.2, 2.4))
-    ax = plt.subplot(1,1,1)
-    nplp2Dfig(df, 'bNum', ax)
-    ax.set_ylabel('Number of clusters')
-    ax.set_yticks([0, 50, 100, 150, 200])
+fig4a = plt.figure(figsize=(3.2, 2.4))
+ax = plt.subplot(1,1,1)
+nplp2Dfig(df, 'bMean', ax)
+ax.set_ylabel('Average licks per cluster')
+ax.set_yticks([0, 50, 100, 150])
+fig4a.savefig(savefolder + 'murphy_pal.eps')
 
 # Figure 3D - protein preference
 dietmsk = df2.diet == 'np'
 a = data2obj1D([df2['pref'][dietmsk], df2['pref'][~dietmsk]])
 
-if makefigs == True:
-    mpl.rcParams['figure.subplot.left'] = 0.25
-    fig3d = plt.figure(figsize=(1.8, 2.4))
-    ax = plt.subplot(1,1,1)
-    barscatter(a, barfacecoloroption = 'between', barfacecolor = [col['np_cas'], col['lp_cas']],
-                         scatteredgecolor = ['black'],
-                         scatterlinecolor = 'black',
-                         grouplabel=['NR', 'PR'],
-                         barwidth = 0.8,
-                         scattersize = 40,
-                         ylabel = 'Casein preference',
-                         ax=ax)
-    ax.set_yticks([0, 0.5, 1.0])
-    ax.set_xlim([0.25,2.75])
-    ax.set_ylim([0, 1.1])
-    ax.set_ylabel('Casein preference')
-    
-    mpl.rcParams['figure.subplot.left'] = 0.15
 
-## Statistics on preference test day
-if statson == True:
-    r_df = df[['ratid', 'sol', 'diet', 'total', 'bMean', 'bNum']]
-    ro.globalenv['r_df'] = r_df
+mpl.rcParams['figure.subplot.left'] = 0.3
+fig3d = plt.figure(figsize=(1.8, 2.4))
+ax = plt.subplot(1,1,1)
+barscatter(a, barfacecoloroption = 'between', barfacecolor = [col['np_cas'], col['lp_cas']],
+                     scatteredgecolor = ['black'],
+                     scatterlinecolor = 'black',
+                     grouplabel=['NR', 'PR'],
+                     barwidth = 0.8,
+                     scattersize = 60,
+                     ylabel = 'Casein preference',
+                     ax=ax)
+ax.set_yticks([0, 0.5, 1.0])
+ax.set_xlim([0.25,2.75])
+ax.set_ylim([-0.1, 1.1])
+ax.set_ylabel('Casein preference')
+fig3d.savefig(savefolder + 'murphy_casratio.eps')
     
-    ro.r('totallicks = aov(formula = total ~ sol * diet + Error(ratid / sol), data = r_df)')
-    ro.r('burstMean = aov(formula = bMean ~ sol * diet + Error(ratid / sol), data = r_df)')
-    ro.r('burstNum = aov(formula = bNum ~ sol * diet + Error(ratid / sol), data = r_df)')
-    
-    print('Total licks')
-    print(ro.r('summary(totallicks)'))
-    
-    ro.r('np_casvmalt = t.test(r_df$total[r_df$diet=="np" & r_df$sol=="c"], r_df$total[r_df$diet=="np" & r_df$sol=="m"], paired=TRUE)')
-    print('Normal protein rats - casein vs. maltodextrin')
-    print(ro.r('np_casvmalt'))
-    
-    ro.r('lp_casvmalt = t.test(r_df$total[r_df$diet=="lp" & r_df$sol=="c"], r_df$total[r_df$diet=="lp" & r_df$sol=="m"], paired=TRUE)')
-    print('LOW PROTEIN rats - casein vs. maltodextrin')
-    print(ro.r('lp_casvmalt'))
-    
-    # Analysis of Licks per burst
-    print('Licks per burst')
-    print(ro.r('summary(burstMean)'))
-    
-    ro.r('np_casvmalt = t.test(r_df$bMean[r_df$diet=="np" & r_df$sol=="c"], r_df$bMean[r_df$diet=="np" & r_df$sol=="m"], paired=TRUE)')
-    print('Normal protein rats (licks per burst) - casein vs. maltodextrin')
-    print(ro.r('np_casvmalt'))
-    
-    ro.r('lp_casvmalt = t.test(r_df$bMean[r_df$diet=="lp" & r_df$sol=="c"], r_df$bMean[r_df$diet=="lp" & r_df$sol=="m"], paired=TRUE)')
-    print('LOW PROTEIN rats (licks per burst) - casein vs. maltodextrin')
-    print(ro.r('lp_casvmalt'))
-        
-    print('Number of bursts')
-    print(ro.r('summary(burstNum)'))
-    
-    ro.r('np_casvmalt = t.test(r_df$bNum[r_df$diet=="np" & r_df$sol=="c"], r_df$bNum[r_df$diet=="np" & r_df$sol=="m"], paired=TRUE)')
-    print('Normal protein rats (burst number) - casein vs. maltodextrin')
-    print(ro.r('np_casvmalt'))
-    
-    ro.r('lp_casvmalt = t.test(r_df$bNum[r_df$diet=="lp" & r_df$sol=="c"], r_df$bNum[r_df$diet=="lp" & r_df$sol=="m"], paired=TRUE)')
-    print('LOW PROTEIN rats (burst number) - casein vs. maltodextrin')
-    print(ro.r('lp_casvmalt'))
-    
-    # Analysis of protein preference ratio
-    ro.globalenv['nppref'] = df2[df2['diet'] == 'np']
-    ro.globalenv['lppref'] = df2[df2['diet'] != 'np']
-    
-    ro.r('proteinPref = t.test(nppref[\'pref\'], lppref[\'pref\'], paired=FALSE)')
-    print(ro.r('proteinPref'))
-    ro.r('proteinPref')
-
-if savefigs == True:
-    savefolder = userhome + '\\Desktop\\Temp Figs\\'
-    
-    fig1a.savefig(savefolder + '01a_bodyweight.eps')
-    fig1b.savefig(savefolder + '01b_foodintake.eps')
-    fig1b2.savefig(savefolder + '01b2_foodintake.eps')
-    
-    fig2a.savefig(savefolder + '02a_condhist_cas.eps')
-    fig2b.savefig(savefolder + '02b_condbar_cas.eps')
-    fig2c.savefig(savefolder + '02c_condhist_malt.eps')
-    fig2d.savefig(savefolder + '02d_condbar_malt.eps')
-    fig2e.savefig(savefolder + '02e_condtotallicks.eps')
-       
-    fig3a.savefig(savefolder + '03a_prefhist.eps')
-    fig3b.savefig(savefolder + '03b_casvmalt.eps')
-    fig3c.savefig(savefolder + '03c_preftotal.eps')
-    fig3d.savefig(savefolder + '03d_caseinpref.eps')
-    
-    fig4a.savefig(savefolder + '04a_prefburstmean.eps')
-    fig4b.savefig(savefolder + '04b_prefburstnum.eps')
