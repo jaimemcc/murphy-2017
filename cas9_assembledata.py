@@ -44,11 +44,11 @@ col['lp_cas'] = 'xkcd:kelly green'
 col['lp_malt'] = 'xkcd:light green'
 
 import pandas as pd
-import rpy2.robjects as ro
+#import rpy2.robjects as ro
 
-from rpy2.robjects import r, pandas2ri, numpy2ri
-pandas2ri.activate()
-numpy2ri.activate()
+#from rpy2.robjects import r, pandas2ri, numpy2ri
+#pandas2ri.activate()
+#numpy2ri.activate()
 
 import os
 import timeit
@@ -198,9 +198,13 @@ except NameError:
         for j in rats[i].sessions:
     #        print('Analysing rat ' + i + ' in session ' + j)
             x = rats[i].sessions[j]
-            
-            x.lickData_cas = x.extractlicks('casein')
-            x.lickData_malt = x.extractlicks('maltodextrin')
+            try:
+                x.lickData_cas = x.extractlicks('casein')
+            except IndexError:
+                print('Difficulty extracting casein licks')
+                
+            try:
+                x.lickData_malt = x.extractlicks('maltodextrin')
             x.lickData_sacc = x.extractlicks('saccharin')
             
             x.designatesession()

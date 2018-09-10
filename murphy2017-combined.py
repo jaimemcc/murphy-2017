@@ -2,13 +2,15 @@
 """
 Created on Tue Sep  5 10:32:27 2017
 
+***Needs to be run with functions-and-figures v1.1***
+
 @author: LocalAdmin1
 """
 
 # Uncomment these imports for R statistics
-makefigs = True
-savefigs = True
-statson = True
+makefigs = False
+savefigs = False
+statson = False
 
 if statson == True:
     import rpy2.robjects as ro
@@ -717,4 +719,38 @@ if savefigs == True:
     
     fig4a.savefig(savefolder + '04a_prefburstmean.eps')
     fig4b.savefig(savefolder + '04b_prefburstnum.eps')
+
+# POST PUBLICATION ANALYSES!!!!!!!!!!!!!!
+    
+# Correlations between palatability and preference
+
+#def murphyscatter(ax, dfx, dfy, xkey, ykey, solkey, diet='', title=''):
+#    
+#    if len(diet) > 0:
+#        dietmsk = dfx['diet'] == diet
+#        dfx = dfx[dietmsk]
+#        
+#        dietmsk = dfy['diet'] == diet
+#        dfy = dfy[dietmsk]
+#
+#    solmsk = dfy
+#    x = dfx[dietmsk][xkey]
+#    y = dfy[dietmsk][ykey]
+#
+#    ax.scatter()
+#    ax.set_title(title)
+
+
+fig, ax = plt.subplots(nrows=3, ncols=4, figsize=(8,6))
+
+solmsk = df['sol'] == 'c'
+ax[0,0].scatter(df[solmsk]['total'], df[solmsk]['bMean'])
+ax[0,1].scatter(df[~solmsk]['total'], df[~solmsk]['bMean'])
+ax[0,2].scatter(df2['pref'], df[solmsk]['bMean'])
+ax[0,3].scatter(df2['pref'], df[~solmsk]['bMean'])
+
+#dietmsk = df[dietmsk] == 'np'
+#dfnp = df[dietmsk]
+#ax[1,0].scatter(df[solmsk]['total'], df[solmsk]['bMean'])
+
 
