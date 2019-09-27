@@ -66,18 +66,22 @@ class Session(object):
         self.rat = metafiledata[hrows['rat']].replace('.', '-')
         self.session = metafiledata[hrows['session']]
         self.medfile = datafolder + metafiledata[hrows['medfile']]
-        self.sessioncode = self.hrow['sessioncode']
+        self.sessioncode = metafiledata[self.hrow['sessioncode']]
 
-        self.bottleA = self.hrow['bottleA']
-        self.bottleB = self.hrow['bottleB']
+        self.diet = metafiledata[self.hrow['diet']]
+        self.bottleA = metafiledata[self.hrow['bottleA']]
+        self.bottleB = metafiledata[self.hrow['bottleB']]
                     
     def extractlicks(self, substance):
         licks = jmf.medfilereader(self.medfile,
                                   varsToExtract = sub2var(self, substance),
                                                     remove_var_header = True)
-        lickData = jmf.lickCalc(licks, burstThreshold=0.5, minburstlength=3, binsize=120)        
-        
-        return lickData
+        if len(licks)>0:
+            lickData = jmf.lickCalc(licks, burstThreshold=0.5, minburstlength=3, binsize=120)
+            return lickData
+        else:
+            print('no licks')
+            return      
 
     def designatesession(self):
         if self.sessioncode == 'casein1':
@@ -166,15 +170,33 @@ def metafile2sessions(metafile, datafolder):
     
     return sessions   
 
+
+metafile = 'CAS9_metafile.txt'
+
+sessions = metafile2sessions(metafile, datafolder)
+
+#x = sessions['cas9-5_6']
+#
+#x.extractlicks('casein')
+#
+#licks = jmf.medfilereader(x.medfile)
 for session in sessions:
       
     x = sessions[session]
-    x.extractlicks('casein')
+    if x.sessioncode == 'preference1':
+        try:
+            x.lickdata_cas = x.extractlicks('casein')
+        except IndexError:
+            print('No casein licks')
+            print("Error:", sys.exc_info()[0])
+        try:
+            x.lickdata_malt = x.extractlicks('maltodextrin')
+        except IndexError:
+            print('No malt licks')
+            print("Error:", sys.exc_info()[0])
+            
 
-metafile = 'CAS9_metafile.txt'
-#metafileData, metafileHeader = jmf.metafilereader(metafile)
 
-sessions = metafile2sessions(metafile, datafolder)
 
 #exptsuffix = ''
 #includecol = 10
