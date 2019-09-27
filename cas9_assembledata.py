@@ -4,6 +4,8 @@ Created on Tue Sep  5 10:32:27 2017
 
 @author: LocalAdmin1
 """
+import sys
+sys.path.insert(0,'C:\\Github\\functions-and-figures\\')
 
 import numpy as np
 import scipy.io as sio
@@ -15,8 +17,6 @@ import JM_custom_figs as jmfig
 
 from matplotlib.backends.backend_pdf import PdfPages
 import matplotlib.gridspec as gridspec
-
-#plt.style.use('murphy')
 
 import matplotlib as mpl
 mpl.rcParams['figure.figsize'] = (3.2, 2.4)
@@ -56,7 +56,7 @@ import timeit
 tic = timeit.default_timer()
 
 userhome = os.path.expanduser('~')
-datafolder = userhome + '\\Documents\\GitHub\\murphy-2017\\cas9_medfiles\\'
+datafolder = 'data\\'
 
 class Rat(object):
     
@@ -98,7 +98,7 @@ class Session(object):
         licks = jmf.medfilereader(self.medfile,
                                   varsToExtract = sub2var(self, substance),
                                                     remove_var_header = True)
-        lickData = jmf.lickCalc(licks, burstThreshold=0.5, binsize=120)        
+        lickData = jmf.lickCalc(licks, burstThreshold=0.5, minburstlength=1, binsize=120)        
         
         return lickData
 
@@ -173,14 +173,14 @@ def nplp2Dfig(df, key, ax):
                  scattersize = 60,
                  ax=ax)
 
-metafile = userhome + '\\Documents\\GitHub\\murphy-2017\\CAS9_metafile.txt'
+metafile = 'CAS9_metafile.txt'
 metafileData, metafileHeader = jmf.metafilereader(metafile)
 
 exptsuffix = ''
 includecol = 10
 
 try:
-    type(rats)
+    type(rats2)
     print('Using existing data')
 except NameError:
     print('Assembling data from Med Associates files')
@@ -205,6 +205,10 @@ except NameError:
                 
             try:
                 x.lickData_malt = x.extractlicks('maltodextrin')
+            except IndexError:
+                print('Difficulty extracting casein licks')
+                
+                
             x.lickData_sacc = x.extractlicks('saccharin')
             
             x.designatesession()
