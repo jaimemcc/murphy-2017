@@ -57,48 +57,25 @@ tic = timeit.default_timer()
 
 userhome = os.path.expanduser('~')
 datafolder = 'data\\'
-
-class Rat(object):
-    
-    nRats = 0
-    nSessions = 0
-    
-    def __init__(self, data):      
-        self.rat = data
-        self.sessions = {}
-        
-        Rat.nRats += 1
-                
-    def loadsession(self, data, header):
-        self.session = 's'+str(data[2]) #should reference column of data with session number
-        self.sessions[self.session] = Session(data, header, self.rat, self.session)
-       
-        Rat.nSessions += 1
         
 class Session(object):
     
-    def __init__(self, data, header, rat, session):
-        self.hrow = {}
-        for idx, col in enumerate(header):
-            self.hrow[col] = data[idx]
-        self.medfile = datafolder + self.hrow['medfile']
+    def __init__(self, sessionID, metafiledata, hrows, datafolder):
+        self.hrow = hrows
+        self.sessionID = sessionID
+        self.rat = metafiledata[hrows['rat']].replace('.', '-')
+        self.session = metafiledata[hrows['session']]
+        self.medfile = datafolder + metafiledata[hrows['medfile']]
         self.sessioncode = self.hrow['sessioncode']
-        self.rat = str(rat)
-        self.session = session
+
         self.bottleA = self.hrow['bottleA']
         self.bottleB = self.hrow['bottleB']
-        
-        if hasattr(rats[self.rat], 'diet'):
-            if rats[self.rat].diet != self.hrow['diet']:
-                print('Wrong diet for rat, must be a mistake in metafile')
-        else:
-            rats[self.rat].diet = self.hrow['diet']
                     
     def extractlicks(self, substance):
         licks = jmf.medfilereader(self.medfile,
                                   varsToExtract = sub2var(self, substance),
                                                     remove_var_header = True)
-        lickData = jmf.lickCalc(licks, burstThreshold=0.5, minburstlength=1, binsize=120)        
+        lickData = jmf.lickCalc(licks, burstThreshold=0.5, minburstlength=3, binsize=120)        
         
         return lickData
 
@@ -173,42 +150,65 @@ def nplp2Dfig(df, key, ax):
                  scattersize = 60,
                  ax=ax)
 
+def metafile2sessions(metafile, datafolder):
+#    jmf.metafilemaker(xlfile, metafile, sheetname=sheetname, fileformat='txt')
+    rows, header = jmf.metafilereader(metafile)
+    
+    hrows = {}
+    for idx, field in enumerate(header):
+        hrows[field] = idx
+    
+    sessions = {}
+    
+    for row in rows:
+        sessionID = row[hrows['rat']].replace('.','-') + '_' + row[hrows['session']]
+        sessions[sessionID] = Session(sessionID, row, hrows, datafolder)
+    
+    return sessions   
+
+for session in sessions:
+      
+    x = sessions[session]
+    x.extractlicks('casein')
+
 metafile = 'CAS9_metafile.txt'
-metafileData, metafileHeader = jmf.metafilereader(metafile)
+#metafileData, metafileHeader = jmf.metafilereader(metafile)
 
-exptsuffix = ''
-includecol = 10
+sessions = metafile2sessions(metafile, datafolder)
 
-try:
-    type(rats2)
-    print('Using existing data')
-except NameError:
-    print('Assembling data from Med Associates files')
-    
-    rats = {}
-    
-    for i in metafileData:
-        if int(i[includecol]) == 1:
-            rowrat = str(i[1])
-            if rowrat not in rats:
-                rats[rowrat] = Rat(rowrat)
-            rats[rowrat].loadsession(i, metafileHeader)
-            
-    for i in rats:
-        for j in rats[i].sessions:
-    #        print('Analysing rat ' + i + ' in session ' + j)
-            x = rats[i].sessions[j]
-            try:
-                x.lickData_cas = x.extractlicks('casein')
-            except IndexError:
-                print('Difficulty extracting casein licks')
-                
-            try:
-                x.lickData_malt = x.extractlicks('maltodextrin')
-            except IndexError:
-                print('Difficulty extracting casein licks')
-                
-                
-            x.lickData_sacc = x.extractlicks('saccharin')
-            
-            x.designatesession()
+#exptsuffix = ''
+#includecol = 10
+#
+#try:
+#    type(rats2)
+#    print('Using existing data')
+#except NameError:
+#    print('Assembling data from Med Associates files')
+#    
+#    rats = {}
+#    
+#    for i in metafileData:
+#        if int(i[includecol]) == 1:
+#            rowrat = str(i[1])
+#            if rowrat not in rats:
+#                rats[rowrat] = Rat(rowrat)
+#            rats[rowrat].loadsession(i, metafileHeader)
+#            
+#    for i in rats:
+#        for j in rats[i].sessions:
+#    #        print('Analysing rat ' + i + ' in session ' + j)
+#            x = rats[i].sessions[j]
+#            try:
+#                x.lickData_cas = x.extractlicks('casein')
+#            except IndexError:
+#                print('Difficulty extracting casein licks')
+#                
+#            try:
+#                x.lickData_malt = x.extractlicks('maltodextrin')
+#            except IndexError:
+#                print('Difficulty extracting casein licks')
+#                
+#                
+#            x.lickData_sacc = x.extractlicks('saccharin')
+#            
+#            x.designatesession()
